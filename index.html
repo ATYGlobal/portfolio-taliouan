@@ -1372,28 +1372,52 @@
   <!-- ══════════════════════════════════════════════════
        TESTIMONIAL
   ══════════════════════════════════════════════════ -->
-  <section id="contact">
+  <section id="contact" style="padding: 100px 0; background: var(--bg-surface);">
     <div class="container">
-      <p class="section-label">Social Proof</p>
-      <h2 class="section-title" style="text-align:center">Professional Testimonial</h2>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <p class="section-label" style="text-align:center">Contact</p>
+        <h2 class="section-title" style="text-align:center">Get in Touch</h2>
+        
+        <form name="contact" method="POST" data-netlify="true" style="background: var(--bg-card); padding: 40px; rounded-2xl; border: 1px solid var(--border); margin-bottom: 80px; border-radius: 20px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div>
+              <label style="display:block; color:var(--text-2); margin-bottom:8px; font-size:14px;">Name</label>
+              <input type="text" name="name" required style="width:100%; background:var(--bg-base); border:1px solid var(--border); color:white; padding:12px; border-radius:8px;">
+            </div>
+            <div>
+              <label style="display:block; color:var(--text-2); margin-bottom:8px; font-size:14px;">Email</label>
+              <input type="email" name="email" required style="width:100%; background:var(--bg-base); border:1px solid var(--border); color:white; padding:12px; border-radius:8px;">
+            </div>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <label style="display:block; color:var(--text-2); margin-bottom:8px; font-size:14px;">Message</label>
+            <textarea name="message" rows="5" required style="width:100%; background:var(--bg-base); border:1px solid var(--border); color:white; padding:12px; border-radius:8px;"></textarea>
+          </div>
+          <button type="submit" style="background:var(--accent); color:var(--bg-base); padding:15px 30px; border:none; border-radius:50px; font-weight:bold; cursor:pointer; width:100%;">
+            Send Message
+          </button>
+        </form>
 
-      <div class="testimonial-wrap fade-up">
-        <p class="testimonial-text">
-          "Abdelbarie is a reliable and highly adaptable professional. He consistently delivered quality results under pressure and demonstrated excellent teamwork during our fiber deployment projects across Spain."
-        </p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">RC</div>
-          <div>
-            <div class="author-name">Rosa Maria Cherino Fernandez</div>
-            <div class="author-title">Lead Project Manager &nbsp;·&nbsp; Modi SL</div>
-            <div class="author-contact">
-              <a href="mailto:rcherino@modisl.com"><i class="fa fa-envelope"></i> rcherino@modisl.com</a>
-              <a href="tel:+34607422649"><i class="fa fa-phone"></i> +34 607 422 649</a>
+        <p class="section-label" style="text-align:center">Social Proof</p>
+        <h2 class="section-title" style="text-align:center">Professional Testimonial</h2>
+
+        <div class="testimonial-wrap fade-up">
+          <p class="testimonial-text">
+            "Abdelbarie is a reliable and highly adaptable professional. He consistently delivered quality results under pressure and demonstrated excellent teamwork during our fiber deployment projects across Spain."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">RC</div>
+            <div>
+              <div class="author-name">Rosa Maria Cherino Fernandez</div>
+              <div class="author-title">Lead Project Manager &nbsp;·&nbsp; Modi SL</div>
+              <div class="author-contact">
+                <a href="mailto:rcherino@modisl.com"><i class="fa fa-envelope"></i> rcherino@modisl.com</a>
+                <a href="tel:+34607422649"><i class="fa fa-phone"></i> +34 607 422 649</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
