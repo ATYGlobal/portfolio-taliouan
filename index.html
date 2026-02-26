@@ -34,6 +34,49 @@
       --font-display: 'Syne', sans-serif;
       --font-body:    'DM Sans', sans-serif;
     }
+    /* --- NUEVOS ESTILOS PARA CONTACTO Y CALENDLY --- */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-2);
+      transition: all 0.3s ease;
+      padding: 8px 0;
+      font-size: 15px;
+    }
+
+    .contact-item:hover {
+      color: var(--accent) !important;
+      transform: translateX(5px);
+    }
+
+    .contact-item i {
+      width: 20px;
+      text-align: center;
+      color: var(--accent);
+    }
+
+    .btn-calendly {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #006bff; /* Azul oficial Calendly */
+      color: white !important;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 107, 255, 0.2);
+    }
+
+    .btn-calendly:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 107, 255, 0.4);
+      filter: brightness(1.1);
+    }
 
     /* ─── RESET & BASE ────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1426,14 +1469,36 @@
        FOOTER
   ══════════════════════════════════════════════════ -->
   <footer>
-    <div class="footer-name">Abd El Barie Taliouan Yarrou</div>
-    <p class="footer-sub">Program Manager · FTTH &amp; Telecom Infrastructure · Barcelona → Germany</p>
-    <div class="footer-links">
-      <a href="mailto:contact@atyglobal.com"><i class="fa fa-envelope"></i> contact@atyglobal.com</a>
-      <a href="tel:+4915511445737"><i class="fa fa-phone"></i> +49 155 11445737</a>
-      <a href="www.linkedin.com/in/abd-el-barie-t-3b85ab74" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-    </div>
-    <p style="font-size:11px;color:var(--text-3);margin-top:20px">© 2025 Abd El Barie Taliouan Yarrou. All rights reserved.</p>
+    <div class="contact-links" style="display: flex; flex-direction: column; gap: 15px;">
+    
+    <a href="tel:+4915511445737" class="contact-item" style="text-decoration: none; color: var(--text-2); transition: color 0.3s ease;">
+        <i class="fa fa-phone" style="color: var(--accent); margin-right: 10px;"></i> 
+        +49 155 11445737 <span style="font-size: 0.8em; opacity: 0.6;">(Germany)</span>
+    </a>
+
+    <a href="tel:+34613364297" class="contact-item" style="text-decoration: none; color: var(--text-2); transition: color 0.3s ease;">
+        <i class="fa fa-phone" style="color: var(--accent); margin-right: 10px;"></i> 
+        +34 613 364 297 <span style="font-size: 0.8em; opacity: 0.6;">(Spain)</span>
+    </a>
+
+    <a href="tel:+31615239304" class="contact-item" style="text-decoration: none; color: var(--text-2); transition: color 0.3s ease;">
+        <i class="fa fa-phone" style="color: var(--accent); margin-right: 10px;"></i> 
+        +34 6 15 23 93 04 <span style="font-size: 0.8em; opacity: 0.6;">(Netherland)</span>
+    </a>
+
+    <a href="tel:+33762418271" class="contact-item" style="text-decoration: none; color: var(--text-2); transition: color 0.3s ease;">
+        <i class="fa fa-phone" style="color: var(--accent); margin-right: 10px;"></i> 
+        +33 7 62 41 82 71‬ <span style="font-size: 0.8em; opacity: 0.6;">(France)</span>
+    </a>
+      
+
+    <a href="https://calendly.com/atyblobal" target="_blank" rel="noopener noreferrer" 
+       style="display: inline-block; margin-top: 10px; background: #006bff; color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; text-align: center; transition: transform 0.2s;">
+        <i class="fa fa-calendar-check" style="margin-right: 10px;"></i> 
+        Schedule a Meeting (Calendly)
+    </a>
+
+</div>
   </footer>
 
 
