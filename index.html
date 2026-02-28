@@ -61,6 +61,57 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════
+       LIGHT MODE TOKENS
+    ═══════════════════════════════════════════════════════════════ */
+    body.light-mode {
+      --bg-0:       #f8fafc;
+      --bg-1:       #ffffff;
+      --bg-2:       #f1f5f9;
+      --bg-3:       #e2e8f0;
+
+      --border-0:   #e2e8f0;
+      --border-1:   #cbd5e1;
+      --border-2:   #94a3b8;
+
+      --text-0:     #0f172a;
+      --text-1:     #334155;
+      --text-2:     #64748b;
+      --text-3:     #94a3b8;
+
+      --accent:     #2563eb;
+      --accent-dim: rgba(37, 99, 235, 0.08);
+      --accent-mid: rgba(37, 99, 235, 0.18);
+
+      --metric-pos: #16a34a;
+      --metric-neg: #d97706;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       THEME TOGGLE BUTTON
+    ═══════════════════════════════════════════════════════════════ */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-1);
+      border-radius: 2px;
+      color: var(--text-2);
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-3);
+      border-color: var(--border-2);
+      color: var(--text-0);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
        RESET & BASE
     ═══════════════════════════════════════════════════════════════ */
     *, *::before, *::after {
@@ -82,6 +133,7 @@
       line-height: 1.65;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     a {
@@ -1298,6 +1350,9 @@
         <li><a href="#downloads">Downloads</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fa fa-moon"></i>
+      </button>
       <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
         <i class="fa fa-bars"></i>
       </button>
@@ -2061,6 +2116,25 @@
 
     navToggle.addEventListener('click', () => {
       navLinksEl.classList.toggle('open');
+    });
+
+    // ── Theme Toggle ──
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon   = themeToggle.querySelector('i');
+
+    const applyTheme = (isLight) => {
+      document.body.classList.toggle('light-mode', isLight);
+      themeIcon.className = isLight ? 'fa fa-sun' : 'fa fa-moon';
+    };
+
+    // Load saved preference
+    const savedTheme = localStorage.getItem('theme');
+    applyTheme(savedTheme === 'light');
+
+    themeToggle.addEventListener('click', () => {
+      const isLight = !document.body.classList.contains('light-mode');
+      applyTheme(isLight);
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 
     // Close mobile nav when a link is clicked
