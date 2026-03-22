@@ -1332,6 +1332,94 @@
       .cert-table td:nth-child(3) { display: none; }
       .footer__contacts { flex-direction: column; align-items: center; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       LANGUAGE SWITCHER
+    ═══════════════════════════════════════════════════════════════ */
+    .lang-switcher {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .lang-switcher__btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-1);
+      border-radius: 2px;
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0 10px;
+      height: 32px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .lang-switcher__btn:hover {
+      background: var(--bg-3);
+      border-color: var(--border-2);
+      color: var(--text-0);
+    }
+
+    .lang-switcher__dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--bg-2);
+      border: 1px solid var(--border-1);
+      border-radius: 2px;
+      min-width: 150px;
+      z-index: 300;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+
+    .lang-switcher__dropdown.open { display: block; }
+
+    .lang-switcher__option {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 14px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      transition: background 0.15s, color 0.15s;
+      border-bottom: 1px solid var(--border-0);
+    }
+
+    .lang-switcher__option:last-child { border-bottom: none; }
+
+    .lang-switcher__option:hover,
+    .lang-switcher__option.active {
+      background: var(--bg-3);
+      color: var(--text-0);
+    }
+
+    .lang-switcher__option.active { color: var(--accent); }
+
+    /* RTL support */
+    body.rtl { direction: rtl; text-align: right; }
+    body.rtl .section-eyebrow::before { display: none; }
+    body.rtl .project-card__list li { padding: 9px 18px 9px 0; }
+    body.rtl .project-card__list li::before { left: auto; right: 0; }
+    body.rtl .lang-switcher__dropdown { right: auto; left: 0; }
+    body.rtl .nav__inner { flex-direction: row-reverse; }
+    body.rtl .hero__meta-item { flex-direction: row-reverse; }
   </style>
 </head>
 <body>
@@ -1343,13 +1431,27 @@
     <div class="nav__inner">
       <div class="nav__logo">ATY<span>.</span>Portal</div>
       <ul class="nav__links" id="navLinks">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#downloads">Downloads</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#hero" data-i18n="nav.home">Home</a></li>
+        <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+        <li><a href="#certifications" data-i18n="nav.certifications">Certifications</a></li>
+        <li><a href="#downloads" data-i18n="nav.downloads">Downloads</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-switcher__btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="langCurrent">EN</span>
+        </button>
+        <div class="lang-switcher__dropdown" id="langDropdown">
+          <button class="lang-switcher__option active" data-lang="EN"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="18" height="13"><rect width="20" height="15" fill="#012169"/><path d="M0,0 L20,15 M20,0 L0,15" stroke="#fff" stroke-width="3"/><path d="M0,0 L20,15 M20,0 L0,15" stroke="#C8102E" stroke-width="1.8"/><path d="M10,0 V15 M0,7.5 H20" stroke="#fff" stroke-width="5"/><path d="M10,0 V15 M0,7.5 H20" stroke="#C8102E" stroke-width="3"/></svg> English</button>
+          <button class="lang-switcher__option" data-lang="DE"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="18" height="13"><rect width="20" height="5" fill="#000"/><rect y="5" width="20" height="5" fill="#DD0000"/><rect y="10" width="20" height="5" fill="#FFCE00"/></svg> Deutsch</button>
+          <button class="lang-switcher__option" data-lang="FR"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="18" height="13"><rect width="20" height="15" fill="#ED2939"/><rect width="13.33" height="15" fill="#fff"/><rect width="6.67" height="15" fill="#002395"/></svg> Français</button>
+          <button class="lang-switcher__option" data-lang="NL"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="18" height="13"><rect width="20" height="5" fill="#AE1C28"/><rect y="5" width="20" height="5" fill="#fff"/><rect y="10" width="20" height="5" fill="#21468B"/></svg> Nederlands</button>
+          <button class="lang-switcher__option" data-lang="ES"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="18" height="13"><rect width="20" height="15" fill="#c60b1e"/><rect y="3.75" width="20" height="7.5" fill="#ffc400"/></svg> Español</button>
+          <button class="lang-switcher__option" data-lang="CAT"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="18" height="13"><rect width="20" height="15" fill="#FCDD09"/><rect y="1.67" width="20" height="1.67" fill="#DA121A"/><rect y="5" width="20" height="1.67" fill="#DA121A"/><rect y="8.33" width="20" height="1.67" fill="#DA121A"/><rect y="11.67" width="20" height="1.67" fill="#DA121A"/></svg> Català</button>
+        </div>
+      </div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <i class="fa fa-moon"></i>
       </button>
@@ -1371,7 +1473,7 @@
         <div class="fade-up">
           <div class="hero__badge">
             <span class="hero__badge-dot"></span>
-            Available for new opportunities
+            <span data-i18n="hero.badge">Available for new opportunities</span>
           </div>
 
           <h1 class="hero__name">
@@ -1379,20 +1481,20 @@
             <em>Taliouan Yarrou</em>
           </h1>
 
-          <p class="hero__role">Program Manager &nbsp;·&nbsp; FTTH &amp; Telecom Infrastructure</p>
+          <p class="hero__role" data-i18n="hero.role">Program Manager · FTTH &amp; Telecom Infrastructure</p>
 
           <p class="hero__desc">
-            Strategic programme leader with 7+ years directing the complete lifecycle of international telecom deployments. Expert in bridging BIM/GIS technical execution with multi-million-euro programme management.
+            <span data-i18n="hero.description">Strategic programme leader with 7+ years directing the complete lifecycle of international telecom deployments. Expert in bridging BIM/GIS technical execution with multi-million-euro programme management.</span>
           </p>
 
           <div class="hero__meta">
             <div class="hero__meta-item">
               <i class="fa fa-location-dot"></i>
-              Germany &nbsp;—&nbsp; Open to relocation
+              <span data-i18n="hero.location">Germany — Open to relocation</span>
             </div>
             <div class="hero__meta-item">
               <i class="fa fa-flag"></i>
-              Spanish National &nbsp;·&nbsp; DOB 24/02/1989
+              <span data-i18n="hero.nationality">Spanish National · DOB 24/02/1989</span>
             </div>
           </div>
 
@@ -1415,21 +1517,21 @@
           <div class="kpi-row">
             <div class="kpi-cell">
               <div class="kpi-cell__value accent">7+</div>
-              <div class="kpi-cell__label">Years in<br>Telecom</div>
+              <div class="kpi-cell__label" data-i18n="kpi.years_label">Years in<br>Telecom</div>
             </div>
             <div class="kpi-cell">
               <div class="kpi-cell__value negative">€4.25M</div>
-              <div class="kpi-cell__label">Max Budget<br>Managed</div>
+              <div class="kpi-cell__label" data-i18n="kpi.budget_label">Max Budget<br>Managed</div>
             </div>
           </div>
           <div class="kpi-row">
             <div class="kpi-cell">
               <div class="kpi-cell__value positive">−13%</div>
-              <div class="kpi-cell__label">Cost<br>Reduction</div>
+              <div class="kpi-cell__label" data-i18n="kpi.cost_label">Cost<br>Reduction</div>
             </div>
             <div class="kpi-cell">
               <div class="kpi-cell__value positive">+€1.5M</div>
-              <div class="kpi-cell__label">Net Profit<br>(UNICO23)</div>
+              <div class="kpi-cell__label" data-i18n="kpi.profit_label">Net Profit<br>(UNICO23)</div>
             </div>
           </div>
         </div>
@@ -1446,9 +1548,9 @@
   <section id="projects" class="surface">
     <div class="container">
       <div class="section-header fade-up">
-        <p class="section-eyebrow">Portfolio</p>
-        <h2 class="section-title">Featured Projects</h2>
-        <p class="section-lead">Core infrastructure programmes managed end-to-end — from network design and permitting to crew coordination and financial reporting.</p>
+        <p class="section-eyebrow" data-i18n="projects.eyebrow">Portfolio</p>
+        <h2 class="section-title" data-i18n="projects.title">Featured Projects</h2>
+        <p class="section-lead" data-i18n="projects.lead">Core infrastructure programmes managed end-to-end — from network design and permitting to crew coordination and financial reporting.</p>
       </div>
 
       <div class="projects-grid">
@@ -1456,22 +1558,22 @@
         <!-- Project 1 -->
         <article class="project-card fade-up">
           <div class="project-card__tags">
-            <span class="project-tag">FTTH + Radio</span>
+            <span class="project-tag" data-i18n="projects.project1.tag">FTTH + Radio</span>
           </div>
-          <h3 class="project-card__title">UNICO-Broadband Programme (Next Generation EU)</h3>
+          <h3 class="project-card__title" data-i18n="projects.project1.title">UNICO-Broadband Programme (Next Generation EU)</h3>
           <ul class="project-card__list">
-            <li>Technical leadership and management of high-speed network deployments (≥300 Mbps) in rural and geographically dispersed areas, promoted by the Ministry for Digital Transformation and Civil Service.</li>
-            <li>UNICO 2022/2023: Comprehensive execution of the deployment plan to bridge the digital divide, managing planning, tendering, and field technical execution under Next Generation funds standards.</li>
-            <li>Grant Management: Technical coordination for the correct justification and compliance of milestones with public administration for fund reception.</li>
+            <li data-i18n="projects.project1.li1">Technical leadership and management of high-speed network deployments (≥300 Mbps) in rural and geographically dispersed areas, promoted by the Ministry for Digital Transformation and Civil Service.</li>
+            <li data-i18n="projects.project1.li2">UNICO 2022/2023: Comprehensive execution of the deployment plan to bridge the digital divide, managing planning, tendering, and field technical execution under Next Generation funds standards.</li>
+            <li data-i18n="projects.project1.li3">Grant Management: Technical coordination for the correct justification and compliance of milestones with public administration for fund reception.</li>
           </ul>
           <div class="project-metrics project-metrics--2col">
             <div class="metric-cell">
               <span class="metric-cell__value negative">€4.25M</span>
-              <span class="metric-cell__label">Budget</span>
+              <span class="metric-cell__label" data-i18n="projects.project1.metric_budget">Budget</span>
             </div>
             <div class="metric-cell">
               <span class="metric-cell__value positive">−13%</span>
-              <span class="metric-cell__label">Cost Reduction</span>
+              <span class="metric-cell__label" data-i18n="projects.project1.metric_cost">Cost Reduction</span>
             </div>
           </div>
           <div class="project-card__actions">
@@ -1487,17 +1589,17 @@
         <!-- Project 2 -->
         <article class="project-card fade-up" style="transition-delay: 0.1s;">
           <div class="project-card__tags">
-            <span class="project-tag">Adamo</span>
+            <span class="project-tag" data-i18n="projects.project2.tag">Adamo</span>
           </div>
-          <h3 class="project-card__title">Adamo Network — Next Generation Project</h3>
+          <h3 class="project-card__title" data-i18n="projects.project2.title">Adamo Network — Next Generation Project</h3>
           <ul class="project-card__list">
-            <li>Optimization and expansion of Adamo's proprietary network infrastructure, focused on maximizing FTTH coverage in vertical and horizontal deployments.</li>
-            <li>Improvement of efficiency in outdoor plant deployment and optimization of technical resources to accelerate the "Time-to-Market" for new customers.</li>
+            <li data-i18n="projects.project2.li1">Optimization and expansion of Adamo's proprietary network infrastructure, focused on maximizing FTTH coverage in vertical and horizontal deployments.</li>
+            <li data-i18n="projects.project2.li2">Improvement of efficiency in outdoor plant deployment and optimization of technical resources to accelerate the "Time-to-Market" for new customers.</li>
           </ul>
           <div class="project-metrics project-metrics--1col">
             <div class="metric-cell">
               <span class="metric-cell__value positive">+€1.5M</span>
-              <span class="metric-cell__label">Net Profit Generated</span>
+              <span class="metric-cell__label" data-i18n="projects.project2.metric_profit">Net Profit Generated</span>
             </div>
           </div>
           <div class="project-card__actions">
@@ -1513,19 +1615,19 @@
         <!-- Project 3 -->
         <article class="project-card fade-up" style="transition-delay: 0.2s;">
           <div class="project-card__tags">
-            <span class="project-tag">Infrastructure</span>
+            <span class="project-tag" data-i18n="projects.project3.tag">Infrastructure</span>
           </div>
-          <h3 class="project-card__title">Municipal Network - Minister for Digital Transformation and Public Service</h3>
+          <h3 class="project-card__title" data-i18n="projects.project3.title">Municipal Network - Minister for Digital Transformation and Public Service</h3>
           <ul class="project-card__list">
-            <li>Managed stakeholders at governmental &amp; contractor levels.</li>
-            <li>Risk management and resolution of technical blockers.</li>
-            <li>Institutional deadline alignment under high pressure.</li>
-            <li>Secured ongoing client relationships via delivery performance.</li>
+            <li data-i18n="projects.project3.li1">Managed stakeholders at governmental &amp; contractor levels.</li>
+            <li data-i18n="projects.project3.li2">Risk management and resolution of technical blockers.</li>
+            <li data-i18n="projects.project3.li3">Institutional deadline alignment under high pressure.</li>
+            <li data-i18n="projects.project3.li4">Secured ongoing client relationships via delivery performance.</li>
           </ul>
           <div class="project-metrics project-metrics--1col">
             <div class="metric-cell">
               <span class="metric-cell__value accent">90%</span>
-              <span class="metric-cell__label">On-Time Delivery Rate</span>
+              <span class="metric-cell__label" data-i18n="projects.project3.metric_delivery">On-Time Delivery Rate</span>
             </div>
           </div>
           <div class="project-card__actions">
@@ -1550,9 +1652,9 @@
   <section id="skills">
     <div class="container">
       <div class="section-header fade-up">
-        <p class="section-eyebrow">Capabilities</p>
-        <h2 class="section-title">Hard &amp; Soft Skills</h2>
-        <p class="section-lead">A cross-functional skill set built over 7 years at the intersection of engineering, logistics, and executive management.</p>
+        <p class="section-eyebrow" data-i18n="skills.eyebrow">Capabilities</p>
+        <h2 class="section-title" data-i18n="skills.title">Hard &amp; Soft Skills</h2>
+        <p class="section-lead" data-i18n="skills.lead">A cross-functional skill set built over 7 years at the intersection of engineering, logistics, and executive management.</p>
       </div>
 
       <div class="skills-grid">
@@ -1561,21 +1663,21 @@
         <div class="skill-col fade-up">
           <div class="skill-col__header">
             <i class="fa fa-brain"></i>
-            Management &amp; Strategy
+            <span data-i18n="skills.col1_header">Management &amp; Strategy</span>
           </div>
           <div class="skill-tags">
-            <span class="skill-tag">Program Management</span>
-            <span class="skill-tag">Scrum / Agile</span>
-            <span class="skill-tag">Multi-year Budgeting</span>
-            <span class="skill-tag">Cost Optimisation</span>
-            <span class="skill-tag">Stakeholder Mgmt</span>
-            <span class="skill-tag">Risk Analysis</span>
-            <span class="skill-tag">Team Leadership</span>
-            <span class="skill-tag">AAPP Negotiation</span>
-            <span class="skill-tag">Executive Reporting</span>
-            <span class="skill-tag">FTTH Lifecycle Mgmt</span>
-            <span class="skill-tag">Contract Management</span>
-            <span class="skill-tag">KPI Dashboarding</span>
+            <span class="skill-tag" data-i18n="skills.tags.program_mgmt">Program Management</span>
+            <span class="skill-tag" data-i18n="skills.tags.agile">Scrum / Agile</span>
+            <span class="skill-tag" data-i18n="skills.tags.budgeting">Multi-year Budgeting</span>
+            <span class="skill-tag" data-i18n="skills.tags.cost_opt">Cost Optimisation</span>
+            <span class="skill-tag" data-i18n="skills.tags.stakeholder">Stakeholder Mgmt</span>
+            <span class="skill-tag" data-i18n="skills.tags.risk">Risk Analysis</span>
+            <span class="skill-tag" data-i18n="skills.tags.leadership">Team Leadership</span>
+            <span class="skill-tag" data-i18n="skills.tags.negotiation">AAPP Negotiation</span>
+            <span class="skill-tag" data-i18n="skills.tags.reporting">Executive Reporting</span>
+            <span class="skill-tag" data-i18n="skills.tags.ftth_lifecycle">FTTH Lifecycle Mgmt</span>
+            <span class="skill-tag" data-i18n="skills.tags.contract">Contract Management</span>
+            <span class="skill-tag" data-i18n="skills.tags.kpi">KPI Dashboarding</span>
           </div>
         </div>
 
@@ -1583,7 +1685,7 @@
         <div class="skill-col fade-up" style="transition-delay: 0.1s;">
           <div class="skill-col__header">
             <i class="fa fa-laptop-code"></i>
-            Technical Software — BIM · GIS · CAD
+            <span data-i18n="skills.col2_header">Technical Software — BIM · GIS · CAD</span>
           </div>
           <div class="skill-list">
             <div class="skill-row">
@@ -1641,50 +1743,50 @@
         <div class="skill-col fade-up" style="transition-delay: 0.2s;">
           <div class="skill-col__header">
             <i class="fa fa-globe"></i>
-            Languages
+            <span data-i18n="skills.col3_header">Languages</span>
           </div>
           <div class="skill-list">
             <div class="lang-row">
               <div class="lang-row__left">
-                <span class="lang-row__name">Spanish</span>
-                <span class="lang-row__desc">Mother tongue</span>
+                <span class="lang-row__name" data-i18n="skills.lang.spanish_name">Spanish</span>
+                <span class="lang-row__desc" data-i18n="skills.lang.spanish_desc">Mother tongue</span>
               </div>
-              <div class="lang-badge"><span>🇪🇸</span> Native</div>
+              <div class="lang-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="20" height="15" role="img" aria-label="Spain"><rect width="20" height="15" fill="#c60b1e"/><rect y="3.75" width="20" height="7.5" fill="#ffc400"/></svg></span> Native</div>
             </div>
             <div class="lang-row">
               <div class="lang-row__left">
-                <span class="lang-row__name">Catalan</span>
-                <span class="lang-row__desc">Bilingual</span>
+                <span class="lang-row__name" data-i18n="skills.lang.catalan_name">Catalan</span>
+                <span class="lang-row__desc" data-i18n="skills.lang.catalan_desc">Bilingual</span>
               </div>
-              <div class="lang-badge"><span>🏴󠁥󠁳󠁣󠁴󠁿</span> C2</div>
+              <div class="lang-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="20" height="15" role="img" aria-label="Catalonia"><rect width="20" height="15" fill="#FCDD09"/><rect y="1.67" width="20" height="1.67" fill="#DA121A"/><rect y="5" width="20" height="1.67" fill="#DA121A"/><rect y="8.33" width="20" height="1.67" fill="#DA121A"/><rect y="11.67" width="20" height="1.67" fill="#DA121A"/></svg></span> C2</div>
             </div>
             <div class="lang-row">
               <div class="lang-row__left">
-                <span class="lang-row__name">English</span>
-                <span class="lang-row__desc">Cambridge ESOL certified</span>
+                <span class="lang-row__name" data-i18n="skills.lang.english_name">English</span>
+                <span class="lang-row__desc" data-i18n="skills.lang.english_desc">Cambridge ESOL certified</span>
               </div>
-              <div class="lang-badge"><span>🇬🇧</span> B1–B2</div>
+              <div class="lang-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="20" height="15" role="img" aria-label="United Kingdom"><rect width="20" height="15" fill="#012169"/><path d="M0,0 L20,15 M20,0 L0,15" stroke="#fff" stroke-width="3"/><path d="M0,0 L20,15 M20,0 L0,15" stroke="#C8102E" stroke-width="1.8"/><path d="M10,0 V15 M0,7.5 H20" stroke="#fff" stroke-width="5"/><path d="M10,0 V15 M0,7.5 H20" stroke="#C8102E" stroke-width="3"/></svg></span> B1–B2</div>
             </div>
             <div class="lang-row">
               <div class="lang-row__left">
-                <span class="lang-row__name">Arabic</span>
-                <span class="lang-row__desc">Professional working proficiency</span>
+                <span class="lang-row__name" data-i18n="skills.lang.arabic_name">Arabic</span>
+                <span class="lang-row__desc" data-i18n="skills.lang.arabic_desc">Professional working proficiency</span>
               </div>
-              <div class="lang-badge"><span>🌍</span> B1–B2</div>
+              <div class="lang-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="20" height="15" role="img" aria-label="Arabic"><rect width="20" height="5" fill="#007A3D"/><rect y="5" width="20" height="5" fill="#fff"/><rect y="10" width="20" height="5" fill="#000"/><polygon points="0,0 7,7.5 0,15" fill="#CE1126"/></svg></span> B1–B2</div>
             </div>
             <div class="lang-row">
               <div class="lang-row__left">
-                <span class="lang-row__name">French</span>
-                <span class="lang-row__desc">Elementary</span>
+                <span class="lang-row__name" data-i18n="skills.lang.french_name">French</span>
+                <span class="lang-row__desc" data-i18n="skills.lang.french_desc">Elementary</span>
               </div>
-              <div class="lang-badge"><span>🇫🇷</span> A2</div>
+              <div class="lang-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="20" height="15" role="img" aria-label="France"><rect width="20" height="15" fill="#ED2939"/><rect width="13.33" height="15" fill="#fff"/><rect width="6.67" height="15" fill="#002395"/></svg></span> A2</div>
             </div>
             <div class="lang-row">
               <div class="lang-row__left">
-                <span class="lang-row__name">German</span>
-                <span class="lang-row__desc">Currently learning</span>
+                <span class="lang-row__name" data-i18n="skills.lang.german_name">German</span>
+                <span class="lang-row__desc" data-i18n="skills.lang.german_desc">Currently learning</span>
               </div>
-              <div class="lang-badge"><span>🇩🇪</span> A1</div>
+              <div class="lang-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" width="20" height="15" role="img" aria-label="Germany"><rect width="20" height="5" fill="#000"/><rect y="5" width="20" height="5" fill="#DD0000"/><rect y="10" width="20" height="5" fill="#FFCE00"/></svg></span> A1</div>
             </div>
           </div>
         </div>
@@ -1701,30 +1803,30 @@
   <section id="certifications" class="surface">
     <div class="container">
       <div class="section-header fade-up">
-        <p class="section-eyebrow">Continuous Learning</p>
-        <h2 class="section-title">Certifications &amp; Adaptability</h2>
-        <p class="section-lead">2025 certifications position this profile at the intersection of three megatrends shaping the future of infrastructure: energy transition, network cybersecurity, and digital intelligence.</p>
+        <p class="section-eyebrow" data-i18n="certifications.eyebrow">Continuous Learning</p>
+        <h2 class="section-title" data-i18n="certifications.title">Certifications &amp; Adaptability</h2>
+        <p class="section-lead" data-i18n="certifications.lead">2025 certifications position this profile at the intersection of three megatrends shaping the future of infrastructure: energy transition, network cybersecurity, and digital intelligence.</p>
       </div>
 
       <!-- 3 featured cards -->
       <div class="cert-featured fade-up">
         <div class="cert-card">
-          <div class="cert-card__icon">☀️</div>
-          <div class="cert-card__title">Solar Energy (60h)</div>
-          <div class="cert-card__issuer">SEAS / SEPE &nbsp;·&nbsp; 2025</div>
-          <div class="cert-card__desc">Design and integration of solar thermal and photovoltaic systems. Directly applicable to sustainable infrastructure sites and off-grid telecom deployments — positioning for the EU energy transition agenda.</div>
+          <div class="cert-card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#FFC400" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Solar Energy"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+          <div class="cert-card__title" data-i18n="certifications.cert1.title">Solar Energy (60h)</div>
+          <div class="cert-card__issuer" data-i18n="certifications.cert1.issuer">SEAS / SEPE &nbsp;·&nbsp; 2025</div>
+          <div class="cert-card__desc" data-i18n="certifications.cert1.desc">Design and integration of solar thermal and photovoltaic systems. Directly applicable to sustainable infrastructure sites and off-grid telecom deployments — positioning for the EU energy transition agenda.</div>
         </div>
         <div class="cert-card">
-          <div class="cert-card__icon">🔒</div>
-          <div class="cert-card__title">Cybersecurity IFCT103 (49h)</div>
-          <div class="cert-card__issuer">Universidad Nebrija + Mainjobs &nbsp;·&nbsp; 2025</div>
-          <div class="cert-card__desc">Network protocols, incident prevention and response, biometrics, and wireless security. Critical for protecting the integrity of deployed FTTH networks — a key differentiator for clients in regulated industries.</div>
+          <div class="cert-card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#4d9de0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Cybersecurity"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <div class="cert-card__title" data-i18n="certifications.cert2.title">Cybersecurity IFCT103 (49h)</div>
+          <div class="cert-card__issuer" data-i18n="certifications.cert2.issuer">Universidad Nebrija + Mainjobs &nbsp;·&nbsp; 2025</div>
+          <div class="cert-card__desc" data-i18n="certifications.cert2.desc">Network protocols, incident prevention and response, biometrics, and wireless security. Critical for protecting the integrity of deployed FTTH networks — a key differentiator for clients in regulated industries.</div>
         </div>
         <div class="cert-card">
-          <div class="cert-card__icon">📈</div>
-          <div class="cert-card__title">Digital Marketing &amp; Automation (60h)</div>
-          <div class="cert-card__issuer">Mainjobs + LinkedIn Learning &nbsp;·&nbsp; 2025</div>
-          <div class="cert-card__desc">Integrated marketing planning and automation workflows. Strengthens the ability to communicate complex infrastructure projects and manage personal and corporate brand positioning in international markets.</div>
+          <div class="cert-card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#3eb489" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Digital Marketing"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><polyline points="22 20 2 20"/></svg></div>
+          <div class="cert-card__title" data-i18n="certifications.cert3.title">Digital Marketing &amp; Automation (60h)</div>
+          <div class="cert-card__issuer" data-i18n="certifications.cert3.issuer">Mainjobs + LinkedIn Learning &nbsp;·&nbsp; 2025</div>
+          <div class="cert-card__desc" data-i18n="certifications.cert3.desc">Integrated marketing planning and automation workflows. Strengthens the ability to communicate complex infrastructure projects and manage personal and corporate brand positioning in international markets.</div>
         </div>
       </div>
 
@@ -1733,10 +1835,10 @@
         <table class="cert-table">
           <thead>
             <tr>
-              <th>Certification</th>
-              <th>Issuing Body</th>
-              <th>Year</th>
-              <th>Hours</th>
+              <th data-i18n="certifications.table.col_cert">Certification</th>
+              <th data-i18n="certifications.table.col_issuer">Issuing Body</th>
+              <th data-i18n="certifications.table.col_year">Year</th>
+              <th data-i18n="certifications.table.col_hours">Hours</th>
             </tr>
           </thead>
           <tbody>
@@ -1765,34 +1867,34 @@
   <section id="education">
     <div class="container">
       <div class="section-header fade-up">
-        <p class="section-eyebrow">Academic Background</p>
-        <h2 class="section-title">Education &amp; Technical Qualifications</h2>
-        <p class="section-lead">A strong technical foundation across architecture, CAD, electronics, and civil drafting — the backbone of a career in infrastructure delivery.</p>
+        <p class="section-eyebrow" data-i18n="education.eyebrow">Academic Background</p>
+        <h2 class="section-title" data-i18n="education.title">Education &amp; Technical Qualifications</h2>
+        <p class="section-lead" data-i18n="education.lead">A strong technical foundation across architecture, CAD, electronics, and civil drafting — the backbone of a career in infrastructure delivery.</p>
       </div>
 
       <div class="edu-list">
         <div class="edu-card fade-up">
-          <div class="edu-card__icon">🏛️</div>
+          <div class="edu-card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Architecture"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 9h1m4 0h1m-6 4h1m4 0h1"/></svg></div>
           <div>
-            <div class="edu-card__title">University Studies in Architecture (partial)</div>
-            <div class="edu-card__meta">Polytechnic University of Catalonia (UPC) &nbsp;·&nbsp; 2017–2019 &nbsp;·&nbsp; EQF Level 6</div>
-            <div class="edu-card__desc">Two years of architecture studies covering technical CAD design, structural calculations, materials physics, and project management fundamentals. Engineering, manufacturing &amp; construction field.</div>
+            <div class="edu-card__title" data-i18n="education.edu1.title">University Studies in Architecture (partial)</div>
+            <div class="edu-card__meta" data-i18n="education.edu1.meta">Polytechnic University of Catalonia (UPC) &nbsp;·&nbsp; 2017–2019 &nbsp;·&nbsp; EQF Level 6</div>
+            <div class="edu-card__desc" data-i18n="education.edu1.desc">Two years of architecture studies covering technical CAD design, structural calculations, materials physics, and project management fundamentals. Engineering, manufacturing &amp; construction field.</div>
           </div>
         </div>
         <div class="edu-card fade-up">
-          <div class="edu-card__icon">📐</div>
+          <div class="edu-card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Drafting"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><rect x="9" y="13" width="6" height="7"/><line x1="9" y1="13" x2="15" y2="13"/></svg></div>
           <div>
-            <div class="edu-card__title">HNC — Architectural Drafting and CAD</div>
-            <div class="edu-card__meta">Institut Castellarnau, Sabadell &nbsp;·&nbsp; 2015–2017 &nbsp;·&nbsp; EQF Level 5</div>
-            <div class="edu-card__desc">Higher National Certificate specialising in technical architectural drawing, CAD software, and building documentation. Foundation for BIM-based design workflows.</div>
+            <div class="edu-card__title" data-i18n="education.edu2.title">HNC — Architectural Drafting and CAD</div>
+            <div class="edu-card__meta" data-i18n="education.edu2.meta">Institut Castellarnau, Sabadell &nbsp;·&nbsp; 2015–2017 &nbsp;·&nbsp; EQF Level 5</div>
+            <div class="edu-card__desc" data-i18n="education.edu2.desc">Higher National Certificate specialising in technical architectural drawing, CAD software, and building documentation. Foundation for BIM-based design workflows.</div>
           </div>
         </div>
         <div class="edu-card fade-up">
-          <div class="edu-card__icon">⚡</div>
+          <div class="edu-card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFC400" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Electronics"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <div>
-            <div class="edu-card__title">HNC — Technician in Industrial Electronics</div>
-            <div class="edu-card__meta">IES Terrassa &nbsp;·&nbsp; 2010–2012 &nbsp;·&nbsp; EQF Level 5</div>
-            <div class="edu-card__desc">Technical qualification in industrial electronics, providing the electrical and systems knowledge that underpins work on telecommunications infrastructure and network equipment.</div>
+            <div class="edu-card__title" data-i18n="education.edu3.title">HNC — Technician in Industrial Electronics</div>
+            <div class="edu-card__meta" data-i18n="education.edu3.meta">IES Terrassa &nbsp;·&nbsp; 2010–2012 &nbsp;·&nbsp; EQF Level 5</div>
+            <div class="edu-card__desc" data-i18n="education.edu3.desc">Technical qualification in industrial electronics, providing the electrical and systems knowledge that underpins work on telecommunications infrastructure and network equipment.</div>
           </div>
         </div>
       </div>
@@ -1807,15 +1909,15 @@
   <section id="downloads" class="surface">
     <div class="container">
       <div class="section-header fade-up">
-        <p class="section-eyebrow">Documentation</p>
-        <h2 class="section-title">Download Documents</h2>
+        <p class="section-eyebrow" data-i18n="downloads.eyebrow">Documentation</p>
+        <h2 class="section-title" data-i18n="downloads.title">Download Documents</h2>
       </div>
 
       <div class="downloads-grid">
         <a href="Abdelbarie_Taliouan_CV_Program Manager_Telecom_DE.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-file-pdf"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Full CV (English)</div>
+            <div class="download-item__name" data-i18n="downloads.cv">Full CV (English)</div>
             <div class="download-item__meta">PDF · Program Manager</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1823,7 +1925,7 @@
         <a href="ENERGIA_SOLAR.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-solar-panel"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Solar Energy Certificate</div>
+            <div class="download-item__name" data-i18n="downloads.solar">Solar Energy Certificate</div>
             <div class="download-item__meta">SEAS / SEPE · 60h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1831,7 +1933,7 @@
         <a href="Universidad_Nebrija_Ciberseguridad.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-shield-halved"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Cybersecurity Diploma (Nebrija)</div>
+            <div class="download-item__name" data-i18n="downloads.cyber_nebrija">Cybersecurity Diploma (Nebrija)</div>
             <div class="download-item__meta">Universidad Nebrija · 25h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1839,7 +1941,7 @@
         <a href="DIGITAL_MARKETING.php.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-bullhorn"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Digital Marketing Certificate</div>
+            <div class="download-item__name" data-i18n="downloads.digital_marketing">Digital Marketing Certificate</div>
             <div class="download-item__meta">Mainjobs · 60h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1847,7 +1949,7 @@
         <a href="Transformacion_Digital.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-database"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Big Data &amp; Data Governance</div>
+            <div class="download-item__name" data-i18n="downloads.big_data">Big Data &amp; Data Governance</div>
             <div class="download-item__meta">Mainjobs · 60h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1855,7 +1957,7 @@
         <a href="DESARROLLO_SOSTENIBLE.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-leaf"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Sustainable Development Cert.</div>
+            <div class="download-item__name" data-i18n="downloads.sustainability">Sustainable Development Cert.</div>
             <div class="download-item__meta">Mainjobs · 100h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1863,7 +1965,7 @@
         <a href="ANALISIS_DE_COSTES.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-chart-bar"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Cost Analysis for Decisions</div>
+            <div class="download-item__name" data-i18n="downloads.cost_analysis">Cost Analysis for Decisions</div>
             <div class="download-item__meta">Mainjobs / SEPE · 56h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1871,7 +1973,7 @@
         <a href="SAP_Concepts_&_iniciation_Certificado.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-cube"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">SAP Concepts &amp; Introduction</div>
+            <div class="download-item__name" data-i18n="downloads.sap">SAP Concepts &amp; Introduction</div>
             <div class="download-item__meta">Logali Group · 25h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1879,7 +1981,7 @@
         <a href="CAMBRIDGE_ENGLISH_CERTIFICATE.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-graduation-cap"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Cambridge ESOL Certificate</div>
+            <div class="download-item__name" data-i18n="downloads.cambridge">Cambridge ESOL Certificate</div>
             <div class="download-item__meta">University of Cambridge · 2015</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1887,7 +1989,7 @@
         <a href="Trinity_College_London.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Trinity College ESOL (Entry 2)</div>
+            <div class="download-item__name" data-i18n="downloads.trinity">Trinity College ESOL (Entry 2)</div>
             <div class="download-item__meta">Trinity College London · 2014</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1895,7 +1997,7 @@
         <a href="Telecom_Operation.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Telecom Operation</div>
+            <div class="download-item__name" data-i18n="downloads.telecom">Telecom Operation</div>
             <div class="download-item__meta">Audelco · 2022</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1903,7 +2005,7 @@
         <a href="SkechUp_Pro.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">SketchUp Pro</div>
+            <div class="download-item__name" data-i18n="downloads.sketchup">SketchUp Pro</div>
             <div class="download-item__meta">Castellarnau · 30h · 2015</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1911,7 +2013,7 @@
         <a href="Project_Management_PMI.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Project Management (PMI®)</div>
+            <div class="download-item__name" data-i18n="downloads.pmi_pm">Project Management (PMI®)</div>
             <div class="download-item__meta">Project Management Institute · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1919,7 +2021,7 @@
         <a href="Marketing_Online_PMI.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Marketing Online (PMI®)</div>
+            <div class="download-item__name" data-i18n="downloads.pmi_marketing">Marketing Online (PMI®)</div>
             <div class="download-item__meta">Project Management Institute · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1927,7 +2029,7 @@
         <a href="Nocn_Entry_3.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Nocn Certificate (Entry 3)</div>
+            <div class="download-item__name" data-i18n="downloads.nocn">Nocn Certificate (Entry 3)</div>
             <div class="download-item__meta">Nocn · 2014</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1935,7 +2037,7 @@
         <a href="English_For_Work.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-pen-to-square"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">English for Work</div>
+            <div class="download-item__name" data-i18n="downloads.english_work">English for Work</div>
             <div class="download-item__meta">LinkedIn Learning · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1943,7 +2045,7 @@
         <a href="Ciberseguridad.pdf" target="_blank" rel="noopener noreferrer" class="download-item">
           <div class="download-item__icon"><i class="fa fa-shield-halved"></i></div>
           <div class="download-item__body">
-            <div class="download-item__name">Cibersecurity</div>
+            <div class="download-item__name" data-i18n="downloads.cybersecurity">Cibersecurity</div>
             <div class="download-item__meta">Fexma · 40h · 2025</div>
           </div>
           <i class="fa fa-arrow-down download-item__arrow"></i>
@@ -1962,24 +2064,24 @@
       <div style="max-width: 800px; margin: 0 auto;">
 
         <div class="section-header fade-up" style="text-align: center;">
-          <p class="section-eyebrow" style="justify-content: center;">Contact</p>
-          <h2 class="section-title">Get in Touch</h2>
+          <p class="section-eyebrow" style="justify-content: center;" data-i18n="contact.eyebrow">Contact</p>
+          <h2 class="section-title" data-i18n="contact.title">Get in Touch</h2>
         </div>
 
         <div class="contact-form-wrap fade-up">
           <form name="contact" method="POST" data-netlify="true">
             <div class="form-grid">
               <div class="form-field">
-                <label class="form-label" for="name">Name</label>
+                <label class="form-label" for="name" data-i18n="contact.label_name">Name</label>
                 <input class="form-input" type="text" id="name" name="name" required />
               </div>
               <div class="form-field">
-                <label class="form-label" for="email">Email</label>
+                <label class="form-label" for="email" data-i18n="contact.label_email">Email</label>
                 <input class="form-input" type="email" id="email" name="email" required />
               </div>
             </div>
             <div class="form-field" style="margin-bottom: 28px;">
-              <label class="form-label" for="message">Message</label>
+              <label class="form-label" for="message" data-i18n="contact.label_message">Message</label>
               <textarea class="form-textarea" id="message" name="message" rows="5" required></textarea>
             </div>
             <button type="submit" class="btn btn--primary btn--full">
@@ -1990,20 +2092,20 @@
 
         <!-- Testimonial -->
         <div class="section-header fade-up" style="text-align: center; margin-top: 72px;">
-          <p class="section-eyebrow" style="justify-content: center;">Social Proof</p>
-          <h2 class="section-title">Professional Testimonial</h2>
+          <p class="section-eyebrow" style="justify-content: center;" data-i18n="contact.testimonial_eyebrow">Social Proof</p>
+          <h2 class="section-title" data-i18n="contact.testimonial_title">Professional Testimonial</h2>
         </div>
 
         <div class="testimonial fade-up">
           <div class="testimonial__quote-mark">"</div>
           <p class="testimonial__text">
-            "Abdelbarie is a reliable and highly adaptable professional. He consistently delivered quality results under pressure and demonstrated excellent teamwork during our fiber deployment projects across Spain."
+            <span data-i18n="contact.testimonial_text">"Abdelbarie is a reliable and highly adaptable professional. He consistently delivered quality results under pressure and demonstrated excellent teamwork during our fiber deployment projects across Spain."</span>
           </p>
           <div class="testimonial__author">
             <div class="testimonial__avatar">RC</div>
             <div>
               <div class="testimonial__name">Rosa Maria Cherino Fernandez</div>
-              <div class="testimonial__role">Lead Project Manager &nbsp;·&nbsp; Modi SL</div>
+              <div class="testimonial__role" data-i18n="contact.testimonial_role">Lead Project Manager &nbsp;·&nbsp; Modi SL</div>
               <div class="testimonial__contacts">
                 <a href="/cdn-cgi/l/email-protection#bfcddcd7dacdd6d1d0ffd2d0dbd6ccd391dcd0d2">
                   <i class="fa fa-envelope"></i>
@@ -2032,7 +2134,7 @@
 
         <div>
           <div class="footer__name">Abdelbarie Taliouan</div>
-          <div class="footer__role">Program Manager · Network Deployment</div>
+          <div class="footer__role" data-i18n="footer.role">Program Manager · Network Deployment</div>
         </div>
 
         <div class="footer__contacts">
@@ -2064,7 +2166,7 @@
         </div>
 
         <div class="footer__legal">
-          © 2026 Abdelbarie Taliouan. All rights reserved.
+          <span data-i18n="footer.legal">© 2026 Abdelbarie Taliouan. All rights reserved.</span>
           <span style="margin: 0 10px; opacity: 0.3;">|</span>
           Powered by ATY GLOBAL
         </div>
@@ -2145,5 +2247,317 @@
     });
   </script>
 
+
+  <!-- ══════════════════════════════════════════════════════════════
+       i18n — LANGUAGE SWITCHER ENGINE
+  ══════════════════════════════════════════════════════════════════ -->
+  <script>
+  const TRANSLATIONS = {
+    EN: {
+      nav: { home:"Home", projects:"Projects", skills:"Skills", certifications:"Certifications", downloads:"Downloads", contact:"Contact" },
+      hero: {
+        badge: "Available for new opportunities",
+        role: "Program Manager · FTTH & Telecom Infrastructure",
+        description: "Strategic programme leader with 7+ years directing the complete lifecycle of international telecom deployments. Expert in bridging BIM/GIS technical execution with multi-million-euro programme management.",
+        location: "Germany — Open to relocation",
+        nationality: "Spanish National · DOB 24/02/1989",
+        btn_schedule: "Schedule a Meeting", btn_projects: "View Projects", btn_cv: "Download CV"
+      },
+      kpi: { years_label:"Years in\nTelecom", budget_label:"Max Budget\nManaged", cost_label:"Cost\nReduction", profit_label:"Net Profit\n(UNICO23)" },
+      projects: {
+        eyebrow:"Portfolio", title:"Featured Projects",
+        lead:"Core infrastructure programmes managed end-to-end — from network design and permitting to crew coordination and financial reporting.",
+        btn_download:"Download", btn_request:"Request Pass",
+        project1: { tag:"FTTH + Radio", title:"UNICO-Broadband Programme (Next Generation EU)",
+          li1:"Technical leadership and management of high-speed network deployments (≥300 Mbps) in rural and geographically dispersed areas, promoted by the Ministry for Digital Transformation and Civil Service.",
+          li2:"UNICO 2022/2023: Comprehensive execution of the deployment plan to bridge the digital divide, managing planning, tendering, and field technical execution under Next Generation funds standards.",
+          li3:"Grant Management: Technical coordination for the correct justification and compliance of milestones with public administration for fund reception.",
+          metric_budget:"Budget", metric_cost:"Cost Reduction" },
+        project2: { tag:"Adamo", title:"Adamo Network — Next Generation Project",
+          li1:"Optimization and expansion of Adamo's proprietary network infrastructure, focused on maximizing FTTH coverage in vertical and horizontal deployments.",
+          li2:'Improvement of efficiency in outdoor plant deployment and optimization of technical resources to accelerate the "Time-to-Market" for new customers.',
+          metric_profit:"Net Profit Generated" },
+        project3: { tag:"Infrastructure", title:"Municipal Network - Minister for Digital Transformation and Public Service",
+          li1:"Managed stakeholders at governmental & contractor levels.",
+          li2:"Risk management and resolution of technical blockers.",
+          li3:"Institutional deadline alignment under high pressure.",
+          li4:"Secured ongoing client relationships via delivery performance.",
+          metric_delivery:"On-Time Delivery Rate" }
+      },
+      skills: {
+        eyebrow:"Capabilities", title:"Hard & Soft Skills",
+        lead:"A cross-functional skill set built over 7 years at the intersection of engineering, logistics, and executive management.",
+        col1_header:"Management & Strategy", col2_header:"Technical Software — BIM · GIS · CAD", col3_header:"Languages",
+        tags: { program_mgmt:"Program Management", agile:"Scrum / Agile", budgeting:"Multi-year Budgeting", cost_opt:"Cost Optimisation",
+          stakeholder:"Stakeholder Mgmt", risk:"Risk Analysis", leadership:"Team Leadership", negotiation:"AAPP Negotiation",
+          reporting:"Executive Reporting", ftth_lifecycle:"FTTH Lifecycle Mgmt", contract:"Contract Management", kpi:"KPI Dashboarding" },
+        lang: {
+          spanish_name:"Spanish", spanish_desc:"Mother tongue",
+          catalan_name:"Catalan", catalan_desc:"Bilingual",
+          english_name:"English", english_desc:"Cambridge ESOL certified",
+          arabic_name:"Arabic", arabic_desc:"Professional working proficiency",
+          french_name:"French", french_desc:"Elementary",
+          german_name:"German", german_desc:"Currently learning"
+        }
+      },
+      certifications: {
+        eyebrow:"Continuous Learning", title:"Certifications & Adaptability",
+        lead:"2025 certifications position this profile at the intersection of three megatrends shaping the future of infrastructure: energy transition, network cybersecurity, and digital intelligence.",
+        cert1: { title:"Solar Energy (60h)", issuer:"SEAS / SEPE · 2025", desc:"Design and integration of solar thermal and photovoltaic systems. Directly applicable to sustainable infrastructure sites and off-grid telecom deployments — positioning for the EU energy transition agenda." },
+        cert2: { title:"Cybersecurity IFCT103 (49h)", issuer:"Universidad Nebrija + Mainjobs · 2025", desc:"Network protocols, incident prevention and response, biometrics, and wireless security. Critical for protecting the integrity of deployed FTTH networks — a key differentiator for clients in regulated industries." },
+        cert3: { title:"Digital Marketing & Automation (60h)", issuer:"Mainjobs + LinkedIn Learning · 2025", desc:"Integrated marketing planning and automation workflows. Strengthens the ability to communicate complex infrastructure projects and manage personal and corporate brand positioning in international markets." },
+        table: { col_cert:"Certification", col_issuer:"Issuing Body", col_year:"Year", col_hours:"Hours" }
+      },
+      education: {
+        eyebrow:"Academic Background", title:"Education & Technical Qualifications",
+        lead:"A strong technical foundation across architecture, CAD, electronics, and civil drafting — the backbone of a career in infrastructure delivery.",
+        edu1: { title:"University Studies in Architecture (partial)", meta:"Polytechnic University of Catalonia (UPC) · 2017–2019 · EQF Level 6", desc:"Two years of architecture studies covering technical CAD design, structural calculations, materials physics, and project management fundamentals. Engineering, manufacturing & construction field." },
+        edu2: { title:"HNC — Architectural Drafting and CAD", meta:"Institut Castellarnau, Sabadell · 2015–2017 · EQF Level 5", desc:"Higher National Certificate specialising in technical architectural drawing, CAD software, and building documentation. Foundation for BIM-based design workflows." },
+        edu3: { title:"HNC — Technician in Industrial Electronics", meta:"IES Terrassa · 2010–2012 · EQF Level 5", desc:"Technical qualification in industrial electronics, providing the electrical and systems knowledge that underpins work on telecommunications infrastructure and network equipment." }
+      },
+      downloads: {
+        eyebrow:"Documentation", title:"Download Documents",
+        cv:"Full CV (English)", solar:"Solar Energy Certificate", cyber_nebrija:"Cybersecurity Diploma (Nebrija)",
+        digital_marketing:"Digital Marketing Certificate", big_data:"Big Data & Data Governance",
+        sustainability:"Sustainable Development Cert.", cost_analysis:"Cost Analysis for Decisions",
+        sap:"SAP Concepts & Introduction", cambridge:"Cambridge ESOL Certificate",
+        trinity:"Trinity College ESOL (Entry 2)", telecom:"Telecom Operation", sketchup:"SketchUp Pro",
+        pmi_pm:"Project Management (PMI®)", pmi_marketing:"Marketing Online (PMI®)",
+        nocn:"Nocn Certificate (Entry 3)", english_work:"English for Work", cybersecurity:"Cibersecurity"
+      },
+      contact: {
+        eyebrow:"Contact", title:"Get in Touch",
+        label_name:"Name", label_email:"Email", label_message:"Message", btn_send:"Send Message",
+        testimonial_eyebrow:"Social Proof", testimonial_title:"Professional Testimonial",
+        testimonial_text:'"Abdelbarie is a reliable and highly adaptable professional. He consistently delivered quality results under pressure and demonstrated excellent teamwork during our fiber deployment projects across Spain."',
+        testimonial_role:"Lead Project Manager · Modi SL"
+      },
+      footer: { role:"Program Manager · Network Deployment", btn_schedule:"Schedule a Call", legal:"© 2026 Abdelbarie Taliouan. All rights reserved." }
+    },
+
+    DE: {
+      nav: { home:"Startseite", projects:"Projekte", skills:"Kompetenzen", certifications:"Zertifizierungen", downloads:"Downloads", contact:"Kontakt" },
+      hero: { badge:"Offen für neue Möglichkeiten", role:"Programmmanager · FTTH & Telekommunikationsinfrastruktur", description:"Strategischer Programmleiter mit über 7 Jahren Erfahrung in der vollständigen Steuerung internationaler Telekommunikationsprojekte. Experte für die Verbindung von BIM/GIS-technischer Ausführung mit der Verwaltung von Programmen im Mehrstelligen-Millionen-Euro-Bereich.", location:"Deutschland — Umzugsbereit", nationality:"Spanischer Staatsbürger · Geb. 24.02.1989", btn_schedule:"Gespräch vereinbaren", btn_projects:"Projekte ansehen", btn_cv:"Lebenslauf herunterladen" },
+      kpi: { years_label:"Jahre in der\nTelekommunikation", budget_label:"Max. verwaltetes\nBudget", cost_label:"Kosten-\nreduzierung", profit_label:"Nettogewinn\n(UNICO23)" },
+      projects: {
+        eyebrow:"Portfolio", title:"Ausgewählte Projekte", lead:"Kerninfrastrukturprogramme, vollständig gesteuert — vom Netzdesign und der Genehmigung bis zur Teamkoordination und Finanzberichterstattung.", btn_download:"Herunterladen", btn_request:"Zugang anfragen",
+        project1: { tag:"FTTH + Funk", title:"UNICO-Breitbandprogramm (NextGenerationEU)", li1:"Technische Leitung und Management des Ausbaus von Hochgeschwindigkeitsnetzen (≥300 Mbps) in ländlichen und geografisch abgelegenen Gebieten, gefördert durch das Ministerium für digitale Transformation und öffentlichen Dienst.", li2:"UNICO 2022/2023: Umfassende Umsetzung des Ausbauplans zur Überbrückung der digitalen Kluft — mit Verwaltung von Planung, Ausschreibungen und technischer Feldausführung gemäß den Standards der NextGenerationEU-Mittel.", li3:"Fördermittelmanagement: Technische Koordination für die ordnungsgemäße Begründung und Einhaltung von Meilensteinen gegenüber der öffentlichen Verwaltung zur Mittelabnahme.", metric_budget:"Budget", metric_cost:"Kostensenkung" },
+        project2: { tag:"Adamo", title:"Adamo-Netzwerk — Next Generation Projekt", li1:"Optimierung und Erweiterung der proprietären Netzinfrastruktur von Adamo mit Fokus auf die Maximierung der FTTH-Abdeckung in vertikalen und horizontalen Ausbauprojekten.", li2:"Effizienzsteigerung beim Außenausbau und Optimierung der technischen Ressourcen zur Beschleunigung der Time-to-Market für neue Kunden.", metric_profit:"Generierter Nettogewinn" },
+        project3: { tag:"Infrastruktur", title:"Kommunales Netz — Ministerium für digitale Transformation und öffentlichen Dienst", li1:"Stakeholder-Management auf Regierungs- und Auftragnehmerebene.", li2:"Risikomanagement und Behebung technischer Blockaden.", li3:"Einhaltung institutioneller Fristen unter hohem Druck.", li4:"Sicherung langfristiger Kundenbeziehungen durch konsequente Liefertreue.", metric_delivery:"Pünktliche Lieferquote" }
+      },
+      skills: {
+        eyebrow:"Kompetenzen", title:"Hard & Soft Skills", lead:"Ein funktionsübergreifendes Kompetenzprofil, aufgebaut über 7 Jahre an der Schnittstelle von Ingenieurwesen, Logistik und Unternehmensführung.", col1_header:"Management & Strategie", col2_header:"Technische Software — BIM · GIS · CAD", col3_header:"Sprachen",
+        tags: { program_mgmt:"Programmmanagement", agile:"Scrum / Agile", budgeting:"Mehrjährige Budgetplanung", cost_opt:"Kostenoptimierung", stakeholder:"Stakeholder-Management", risk:"Risikoanalyse", leadership:"Teamführung", negotiation:"Behördenverhandlung", reporting:"Executive Reporting", ftth_lifecycle:"FTTH-Lebenszyklusmanagement", contract:"Vertragsmanagement", kpi:"KPI-Dashboarding" },
+        lang: { spanish_name:"Spanisch", spanish_desc:"Muttersprache", catalan_name:"Katalanisch", catalan_desc:"Zweisprachig", english_name:"Englisch", english_desc:"Cambridge ESOL zertifiziert", arabic_name:"Arabisch", arabic_desc:"Berufliche Arbeitskenntnisse", french_name:"Französisch", french_desc:"Grundkenntnisse", german_name:"Deutsch", german_desc:"Derzeit im Erwerb" }
+      },
+      certifications: {
+        eyebrow:"Kontinuierliches Lernen", title:"Zertifizierungen & Anpassungsfähigkeit", lead:"Die Zertifizierungen von 2025 positionieren dieses Profil an der Schnittstelle dreier Megatrends, die die Zukunft der Infrastruktur prägen: Energiewende, Netzwerksicherheit und digitale Intelligenz.",
+        cert1: { title:"Solarenergie (60h)", issuer:"SEAS / SEPE · 2025", desc:"Planung und Integration von Solarthermie- und Photovoltaiksystemen. Direkt anwendbar auf nachhaltige Infrastrukturstandorte und netzunabhängige Telekommunikationsanlagen — ideal für die EU-Energiewende." },
+        cert2: { title:"Cybersicherheit IFCT103 (49h)", issuer:"Universidad Nebrija + Mainjobs · 2025", desc:"Netzwerkprotokolle, Prävention und Reaktion auf Vorfälle, Biometrie und Drahtlossicherheit. Entscheidend für den Schutz der Integrität eingesetzter FTTH-Netze — ein zentrales Differenzierungsmerkmal für Kunden in regulierten Branchen." },
+        cert3: { title:"Digitales Marketing & Automatisierung (60h)", issuer:"Mainjobs + LinkedIn Learning · 2025", desc:"Integrierte Marketingplanung und Automatisierungs-Workflows. Stärkt die Fähigkeit, komplexe Infrastrukturprojekte zu kommunizieren und das persönliche sowie unternehmerische Markenprofil auf internationalen Märkten zu gestalten." },
+        table: { col_cert:"Zertifizierung", col_issuer:"Ausstellende Institution", col_year:"Jahr", col_hours:"Stunden" }
+      },
+      education: {
+        eyebrow:"Akademischer Hintergrund", title:"Ausbildung & technische Qualifikationen", lead:"Eine solide technische Grundlage in Architektur, CAD, Elektronik und Bautechnik — das Fundament einer Karriere in der Infrastrukturumsetzung.",
+        edu1: { title:"Architekturstudium (nicht abgeschlossen)", meta:"Polytechnische Universität Katalonien (UPC) · 2017–2019 · DQR-Niveau 6", desc:"Zwei Jahre Architekturstudium mit technischem CAD-Design, Statikberechnungen, Materialphysik und Projektmanagementgrundlagen." },
+        edu2: { title:"Höheres Technisches Zertifikat — Architektonisches Zeichnen & CAD", meta:"Institut Castellarnau, Sabadell · 2015–2017 · DQR-Niveau 5", desc:"Höheres Fachabschluss mit Schwerpunkt auf technischem Architekturzeichnen, CAD-Software und Baudokumentation. Grundlage für BIM-basierte Planungsabläufe." },
+        edu3: { title:"Höheres Technisches Zertifikat — Industrieelektronik", meta:"IES Terrassa · 2010–2012 · DQR-Niveau 5", desc:"Technische Qualifikation in Industrieelektronik, die das elektrotechnische und systemtechnische Wissen für Telekommunikationsinfrastrukturen und Netzwerkkomponenten liefert." }
+      },
+      downloads: { eyebrow:"Dokumentation", title:"Dokumente herunterladen", cv:"Vollständiger Lebenslauf (Englisch)", solar:"Zertifikat Solarenergie", cyber_nebrija:"Cybersicherheitsdiplom (Nebrija)", digital_marketing:"Zertifikat Digitales Marketing", big_data:"Big Data & Data Governance", sustainability:"Zertifikat Nachhaltige Entwicklung", cost_analysis:"Kostenanalyse für Entscheidungen", sap:"SAP Grundlagen & Einführung", cambridge:"Cambridge ESOL Zertifikat", trinity:"Trinity College ESOL (Stufe 2)", telecom:"Telekommunikationsbetrieb", sketchup:"SketchUp Pro", pmi_pm:"Projektmanagement (PMI®)", pmi_marketing:"Online-Marketing (PMI®)", nocn:"NOCN-Zertifikat (Stufe 3)", english_work:"Englisch für den Beruf", cybersecurity:"Cybersicherheit" },
+      contact: { eyebrow:"Kontakt", title:"Kontakt aufnehmen", label_name:"Name", label_email:"E-Mail", label_message:"Nachricht", btn_send:"Nachricht senden", testimonial_eyebrow:"Referenz", testimonial_title:"Professionelle Empfehlung", testimonial_text:'"Abdelbarie ist ein zuverlässiger und äußerst anpassungsfähiger Fachmann. Er lieferte konstant qualitativ hochwertige Ergebnisse unter Druck und bewies ausgezeichnete Teamarbeit bei unseren Glasfaserprojekten in ganz Spanien."', testimonial_role:"Leitende Projektmanagerin · Modi SL" },
+      footer: { role:"Programmmanager · Netzwerkausbau", btn_schedule:"Gespräch vereinbaren", legal:"© 2026 Abdelbarie Taliouan. Alle Rechte vorbehalten." }
+    },
+
+    FR: {
+      nav: { home:"Accueil", projects:"Projets", skills:"Compétences", certifications:"Certifications", downloads:"Téléchargements", contact:"Contact" },
+      hero: { badge:"Disponible pour de nouvelles opportunités", role:"Directeur de Programme · Infrastructure FTTH & Télécoms", description:"Directeur de programme stratégique avec plus de 7 ans d'expérience dans la conduite du cycle de vie complet de déploiements télécoms internationaux. Expert dans l'articulation entre l'exécution technique BIM/GIS et le pilotage de programmes de plusieurs millions d'euros.", location:"Allemagne — Mobilité géographique possible", nationality:"Nationalité espagnole · Né le 24/02/1989", btn_schedule:"Planifier un entretien", btn_projects:"Voir les projets", btn_cv:"Télécharger le CV" },
+      kpi: { years_label:"Années dans\nles Télécoms", budget_label:"Budget max.\ngéré", cost_label:"Réduction\ndes coûts", profit_label:"Bénéfice net\n(UNICO23)" },
+      projects: {
+        eyebrow:"Portfolio", title:"Projets phares", lead:"Programmes d'infrastructure gérés de bout en bout — de la conception réseau et des autorisations à la coordination des équipes et au reporting financier.", btn_download:"Télécharger", btn_request:"Demander l'accès",
+        project1: { tag:"FTTH + Radio", title:"Programme UNICO-Haut Débit (NextGenerationEU)", li1:"Direction technique et gestion des déploiements de réseaux à très haut débit (≥300 Mbps) dans les zones rurales et géographiquement dispersées, promus par le Ministère de la Transformation Numérique et de la Fonction Publique.", li2:"UNICO 2022/2023 : Exécution complète du plan de déploiement pour réduire la fracture numérique — gestion de la planification, des appels d'offres et de l'exécution technique sur le terrain selon les normes des fonds NextGenerationEU.", li3:"Gestion des subventions : Coordination technique pour la justification correcte et la conformité des jalons auprès de l'administration publique en vue du déblocage des fonds.", metric_budget:"Budget", metric_cost:"Réduction des coûts" },
+        project2: { tag:"Adamo", title:"Réseau Adamo — Projet Next Generation", li1:"Optimisation et extension de l'infrastructure réseau propriétaire d'Adamo, axée sur la maximisation de la couverture FTTH dans les déploiements verticaux et horizontaux.", li2:"Amélioration de l'efficacité du déploiement en infrastructure extérieure et optimisation des ressources techniques pour accélérer le Time-to-Market des nouveaux clients.", metric_profit:"Bénéfice net généré" },
+        project3: { tag:"Infrastructure", title:"Réseau Municipal — Ministère de la Transformation Numérique et de la Fonction Publique", li1:"Gestion des parties prenantes aux niveaux gouvernemental et contractant.", li2:"Gestion des risques et résolution des blocages techniques.", li3:"Respect des délais institutionnels sous forte pression.", li4:"Fidélisation des clients grâce à une livraison conforme aux engagements.", metric_delivery:"Taux de livraison dans les délais" }
+      },
+      skills: {
+        eyebrow:"Capacités", title:"Compétences techniques et comportementales", lead:"Un profil de compétences transversal, construit sur 7 ans à l'intersection de l'ingénierie, de la logistique et du management exécutif.", col1_header:"Management & Stratégie", col2_header:"Logiciels techniques — BIM · GIS · CAO", col3_header:"Langues",
+        tags: { program_mgmt:"Gestion de programme", agile:"Scrum / Agile", budgeting:"Budgétisation pluriannuelle", cost_opt:"Optimisation des coûts", stakeholder:"Gestion des parties prenantes", risk:"Analyse des risques", leadership:"Leadership d'équipe", negotiation:"Négociation avec les administrations", reporting:"Reporting exécutif", ftth_lifecycle:"Gestion du cycle de vie FTTH", contract:"Gestion contractuelle", kpi:"Tableaux de bord KPI" },
+        lang: { spanish_name:"Espagnol", spanish_desc:"Langue maternelle", catalan_name:"Catalan", catalan_desc:"Bilingue", english_name:"Anglais", english_desc:"Certifié Cambridge ESOL", arabic_name:"Arabe", arabic_desc:"Compétence professionnelle opérationnelle", french_name:"Français", french_desc:"Niveau élémentaire", german_name:"Allemand", german_desc:"En cours d'apprentissage" }
+      },
+      certifications: {
+        eyebrow:"Formation continue", title:"Certifications & Adaptabilité", lead:"Les certifications de 2025 positionnent ce profil à l'intersection de trois mégatendances qui façonnent l'avenir des infrastructures : transition énergétique, cybersécurité des réseaux et intelligence numérique.",
+        cert1: { title:"Énergie solaire (60h)", issuer:"SEAS / SEPE · 2025", desc:"Conception et intégration de systèmes solaires thermiques et photovoltaïques. Directement applicable aux sites d'infrastructure durables et aux déploiements télécoms hors réseau — en phase avec l'agenda de transition énergétique de l'UE." },
+        cert2: { title:"Cybersécurité IFCT103 (49h)", issuer:"Universidad Nebrija + Mainjobs · 2025", desc:"Protocoles réseau, prévention et réponse aux incidents, biométrie et sécurité sans fil. Essentiel pour garantir l'intégrité des réseaux FTTH déployés — un facteur différenciant clé pour les clients des secteurs réglementés." },
+        cert3: { title:"Marketing digital & Automatisation (60h)", issuer:"Mainjobs + LinkedIn Learning · 2025", desc:"Planification marketing intégrée et workflows d'automatisation. Renforce la capacité à valoriser des projets d'infrastructure complexes et à gérer le positionnement de marque personnel et corporate sur les marchés internationaux." },
+        table: { col_cert:"Certification", col_issuer:"Organisme émetteur", col_year:"Année", col_hours:"Heures" }
+      },
+      education: {
+        eyebrow:"Parcours académique", title:"Formation & qualifications techniques", lead:"Solides bases techniques en architecture, CAO, électronique et dessin technique — le socle d'une carrière dans la réalisation d'infrastructures.",
+        edu1: { title:"Études d'architecture (partielles)", meta:"Université Polytechnique de Catalogne (UPC) · 2017–2019 · Niveau EQF 6", desc:"Deux ans d'études d'architecture couvrant la conception CAO technique, les calculs de structure, la physique des matériaux et les fondamentaux du management de projet." },
+        edu2: { title:"BTS — Dessin architectural & CAO", meta:"Institut Castellarnau, Sabadell · 2015–2017 · Niveau EQF 5", desc:"Brevet de technicien supérieur spécialisé dans le dessin architectural technique, les logiciels CAO et la documentation de chantier. Base pour les workflows de conception BIM." },
+        edu3: { title:"BTS — Technicien en électronique industrielle", meta:"IES Terrassa · 2010–2012 · Niveau EQF 5", desc:"Qualification technique en électronique industrielle, fournissant les connaissances électriques et systèmes nécessaires aux infrastructures télécoms et aux équipements réseau." }
+      },
+      downloads: { eyebrow:"Documentation", title:"Télécharger les documents", cv:"CV complet (Anglais)", solar:"Certificat Énergie Solaire", cyber_nebrija:"Diplôme Cybersécurité (Nebrija)", digital_marketing:"Certificat Marketing Digital", big_data:"Big Data & Gouvernance des données", sustainability:"Certificat Développement Durable", cost_analysis:"Analyse de coûts pour la décision", sap:"SAP Concepts & Introduction", cambridge:"Certificat Cambridge ESOL", trinity:"Trinity College ESOL (Niveau 2)", telecom:"Exploitation Télécoms", sketchup:"SketchUp Pro", pmi_pm:"Gestion de projet (PMI®)", pmi_marketing:"Marketing en ligne (PMI®)", nocn:"Certificat NOCN (Niveau 3)", english_work:"Anglais professionnel", cybersecurity:"Cybersécurité" },
+      contact: { eyebrow:"Contact", title:"Prendre contact", label_name:"Nom", label_email:"E-mail", label_message:"Message", btn_send:"Envoyer le message", testimonial_eyebrow:"Référence professionnelle", testimonial_title:"Témoignage professionnel", testimonial_text:'"Abdelbarie est un professionnel fiable et remarquablement adaptable. Il a constamment fourni des résultats de qualité sous pression et a démontré un excellent esprit d\'équipe lors de nos projets de déploiement fibre à travers l\'Espagne."', testimonial_role:"Responsable de projet · Modi SL" },
+      footer: { role:"Directeur de Programme · Déploiement réseau", btn_schedule:"Planifier un appel", legal:"© 2026 Abdelbarie Taliouan. Tous droits réservés." }
+    },
+
+    NL: {
+      nav: { home:"Start", projects:"Projecten", skills:"Vaardigheden", certifications:"Certificeringen", downloads:"Downloads", contact:"Contact" },
+      hero: { badge:"Beschikbaar voor nieuwe kansen", role:"Programmamanager · FTTH & Telecominfrastructuur", description:"Strategisch programmamanager met meer dan 7 jaar ervaring in de volledige lifecycle van internationale telecomimplementaties. Expert in het verbinden van BIM/GIS-technische uitvoering met programmamanagement op meerdere miljoenen euro's.", location:"Duitsland — Open voor verhuizing", nationality:"Spaans staatsburger · Geb. 24-02-1989", btn_schedule:"Gesprek inplannen", btn_projects:"Projecten bekijken", btn_cv:"CV downloaden" },
+      kpi: { years_label:"Jaar in de\nTelecom", budget_label:"Max. beheerd\nbudget", cost_label:"Kosten-\nreductie", profit_label:"Nettowinst\n(UNICO23)" },
+      projects: {
+        eyebrow:"Portfolio", title:"Uitgelichte projecten", lead:"Kern-infrastructuurprogramma's volledig aangestuurd — van netwerkontwerp en vergunningen tot teamcoördinatie en financiële rapportage.", btn_download:"Downloaden", btn_request:"Toegang aanvragen",
+        project1: { tag:"FTTH + Radio", title:"UNICO-Breedbandprogramma (NextGenerationEU)", li1:"Technische leiding en beheer van de uitrol van hogesnelheidsnetwerken (≥300 Mbps) in landelijke en geografisch verspreid gelegen gebieden, gestimuleerd door het Ministerie van Digitale Transformatie en Overheidsdienst.", li2:"UNICO 2022/2023: Integrale uitvoering van het uitrolplan om de digitale kloof te overbruggen — beheer van planning, aanbestedingen en technische velduitvoering conform de normen van de NextGenerationEU-fondsen.", li3:"Subsidiebeheer: Technische coördinatie voor de correcte verantwoording en naleving van mijlpalen bij de overheid ten behoeve van fondsontvangst.", metric_budget:"Budget", metric_cost:"Kostenreductie" },
+        project2: { tag:"Adamo", title:"Adamo-netwerk — Next Generation Project", li1:"Optimalisatie en uitbreiding van de eigen netwerkinfrastructuur van Adamo, gericht op het maximaliseren van FTTH-dekking bij verticale en horizontale uitrol.", li2:"Verbetering van de efficiëntie bij buitenplantuitrol en optimalisatie van technische middelen om de time-to-market voor nieuwe klanten te versnellen.", metric_profit:"Gegenereerde nettowinst" },
+        project3: { tag:"Infrastructuur", title:"Gemeentelijk netwerk — Ministerie van Digitale Transformatie en Overheidsdienst", li1:"Stakeholdermanagement op overheids- en aannemersniveau.", li2:"Risicobeheer en oplossing van technische blokkades.", li3:"Afstemming op institutionele deadlines onder hoge druk.", li4:"Behoud van klantrelaties op lange termijn dankzij consistente leveringsprestaties.", metric_delivery:"Tijdige oplevering" }
+      },
+      skills: {
+        eyebrow:"Capaciteiten", title:"Harde & zachte vaardigheden", lead:"Een cross-functioneel vaardigheidsprofiel opgebouwd over 7 jaar op het snijvlak van engineering, logistiek en directiemanagement.", col1_header:"Management & Strategie", col2_header:"Technische software — BIM · GIS · CAD", col3_header:"Talen",
+        tags: { program_mgmt:"Programmamanagement", agile:"Scrum / Agile", budgeting:"Meerjarige budgettering", cost_opt:"Kostenoptimalisatie", stakeholder:"Stakeholdermanagement", risk:"Risicoanalyse", leadership:"Teamleiderschap", negotiation:"Onderhandelen met overheden", reporting:"Directierapportage", ftth_lifecycle:"FTTH-levenscyclusbeheer", contract:"Contractbeheer", kpi:"KPI-dashboarding" },
+        lang: { spanish_name:"Spaans", spanish_desc:"Moedertaal", catalan_name:"Catalaans", catalan_desc:"Tweetalig", english_name:"Engels", english_desc:"Cambridge ESOL gecertificeerd", arabic_name:"Arabisch", arabic_desc:"Professionele werkvaardigheid", french_name:"Frans", french_desc:"Basisniveau", german_name:"Duits", german_desc:"In aanleren" }
+      },
+      certifications: {
+        eyebrow:"Permanente educatie", title:"Certificeringen & Aanpassingsvermogen", lead:"De certificeringen van 2025 positioneren dit profiel op het snijvlak van drie megatrends die de toekomst van infrastructuur bepalen: energietransitie, netwerkbeveiliging en digitale intelligentie.",
+        cert1: { title:"Zonne-energie (60u)", issuer:"SEAS / SEPE · 2025", desc:"Ontwerp en integratie van zonnethermische en fotovoltaïsche systemen. Direct toepasbaar op duurzame infrastructuurlocaties en off-grid telecomimplementaties — in lijn met de EU-energietransitieagenda." },
+        cert2: { title:"Cyberbeveiliging IFCT103 (49u)", issuer:"Universidad Nebrija + Mainjobs · 2025", desc:"Netwerkprotocollen, incidentpreventie en -respons, biometrie en draadloze beveiliging. Essentieel voor de bescherming van de integriteit van uitgerolde FTTH-netwerken — een belangrijk onderscheidend kenmerk voor klanten in gereguleerde sectoren." },
+        cert3: { title:"Digitale marketing & Automatisering (60u)", issuer:"Mainjobs + LinkedIn Learning · 2025", desc:"Geïntegreerde marketingplanning en automatiseringsworkflows. Versterkt het vermogen om complexe infrastructuurprojecten te communiceren en persoonlijk en zakelijk merkpositionering op internationale markten te beheren." },
+        table: { col_cert:"Certificering", col_issuer:"Uitgevende instantie", col_year:"Jaar", col_hours:"Uren" }
+      },
+      education: {
+        eyebrow:"Academische achtergrond", title:"Opleiding & technische kwalificaties", lead:"Een sterke technische basis in architectuur, CAD, elektronica en bouwkundig tekenen — de fundering van een carrière in infrastructuurrealisatie.",
+        edu1: { title:"Architectuurstudie (gedeeltelijk)", meta:"Polytechnische Universiteit van Catalonië (UPC) · 2017–2019 · EQF-niveau 6", desc:"Twee jaar architectuurstudie met technisch CAD-ontwerp, constructieberekeningen, materiaalkunde en projectmanagementbeginselen." },
+        edu2: { title:"HBO — Architectonisch tekenen & CAD", meta:"Institut Castellarnau, Sabadell · 2015–2017 · EQF-niveau 5", desc:"Hogerberoepsonderwijs gericht op technisch architecturaal tekenen, CAD-software en bouwdocumentatie. Basis voor BIM-gebaseerde ontwerpworkflows." },
+        edu3: { title:"HBO — Industriële elektronica", meta:"IES Terrassa · 2010–2012 · EQF-niveau 5", desc:"Technische kwalificatie in industriële elektronica, met de elektrische en systeemkennis die ten grondslag ligt aan werk aan telecommunicatie-infrastructuur en netwerkapparatuur." }
+      },
+      downloads: { eyebrow:"Documentatie", title:"Documenten downloaden", cv:"Volledig cv (Engels)", solar:"Certificaat Zonne-energie", cyber_nebrija:"Cyberbeveiligingsdiploma (Nebrija)", digital_marketing:"Certificaat Digitale Marketing", big_data:"Big Data & Data Governance", sustainability:"Certificaat Duurzame Ontwikkeling", cost_analysis:"Kostenanalyse voor besluitvorming", sap:"SAP Concepten & Inleiding", cambridge:"Cambridge ESOL Certificaat", trinity:"Trinity College ESOL (Niveau 2)", telecom:"Telecomoperaties", sketchup:"SketchUp Pro", pmi_pm:"Projectmanagement (PMI®)", pmi_marketing:"Online Marketing (PMI®)", nocn:"NOCN-certificaat (Niveau 3)", english_work:"Engels voor de werkplek", cybersecurity:"Cyberbeveiliging" },
+      contact: { eyebrow:"Contact", title:"Neem contact op", label_name:"Naam", label_email:"E-mail", label_message:"Bericht", btn_send:"Bericht versturen", testimonial_eyebrow:"Aanbeveling", testimonial_title:"Professionele aanbeveling", testimonial_text:'"Abdelbarie is een betrouwbare en uiterst flexibele professional. Hij leverde consequent kwalitatieve resultaten onder druk en toonde uitstekend teamwork tijdens onze glasvezelprojecten in heel Spanje."', testimonial_role:"Lead Projectmanager · Modi SL" },
+      footer: { role:"Programmamanager · Netwerkuitrol", btn_schedule:"Gesprek plannen", legal:"© 2026 Abdelbarie Taliouan. Alle rechten voorbehouden." }
+    },
+
+    ES: {
+      nav: { home:"Inicio", projects:"Proyectos", skills:"Competencias", certifications:"Certificaciones", downloads:"Descargas", contact:"Contacto" },
+      hero: { badge:"Disponible para nuevas oportunidades", role:"Director de Programa · Infraestructura FTTH y Telecomunicaciones", description:"Líder de programa estratégico con más de 7 años dirigiendo el ciclo de vida completo de despliegues internacionales de telecomunicaciones. Experto en conectar la ejecución técnica BIM/GIS con la gestión de programas de varios millones de euros.", location:"Alemania — Abierto a reubicación", nationality:"Ciudadano español · Fecha de nacimiento 24/02/1989", btn_schedule:"Programar reunión", btn_projects:"Ver proyectos", btn_cv:"Descargar CV" },
+      kpi: { years_label:"Años en\nTelecomunicaciones", budget_label:"Presupuesto máx.\ngestionado", cost_label:"Reducción\nde costes", profit_label:"Beneficio neto\n(UNICO23)" },
+      projects: {
+        eyebrow:"Portafolio", title:"Proyectos destacados", lead:"Programas de infraestructura gestionados de principio a fin — desde el diseño de red y permisos hasta la coordinación de equipos y los informes financieros.", btn_download:"Descargar", btn_request:"Solicitar acceso",
+        project1: { tag:"FTTH + Radio", title:"Programa UNICO-Banda Ancha (NextGenerationEU)", li1:"Liderazgo técnico y gestión del despliegue de redes de alta velocidad (≥300 Mbps) en zonas rurales y geográficamente dispersas, promovido por el Ministerio de Transformación Digital y Función Pública.", li2:"UNICO 2022/2023: Ejecución integral del plan de despliegue para reducir la brecha digital, gestionando planificación, licitación y ejecución técnica en campo bajo los estándares de los fondos NextGenerationEU.", li3:"Gestión de subvenciones: Coordinación técnica para la correcta justificación y cumplimiento de hitos ante la administración pública para la recepción de fondos.", metric_budget:"Presupuesto", metric_cost:"Reducción de costes" },
+        project2: { tag:"Adamo", title:"Red Adamo — Proyecto Next Generation", li1:"Optimización y expansión de la infraestructura de red propia de Adamo, centrada en maximizar la cobertura FTTH en despliegues verticales y horizontales.", li2:"Mejora de la eficiencia en el despliegue de planta exterior y optimización de recursos técnicos para acelerar el Time-to-Market para nuevos clientes.", metric_profit:"Beneficio neto generado" },
+        project3: { tag:"Infraestructura", title:"Red Municipal — Ministerio de Transformación Digital y Servicio Público", li1:"Gestión de partes interesadas a niveles gubernamental y de contratistas.", li2:"Gestión de riesgos y resolución de bloqueos técnicos.", li3:"Cumplimiento de plazos institucionales bajo alta presión.", li4:"Fidelización de relaciones con clientes mediante rendimiento de entrega.", metric_delivery:"Tasa de entrega puntual" }
+      },
+      skills: {
+        eyebrow:"Capacidades", title:"Competencias técnicas y transversales", lead:"Un perfil de competencias multifuncional construido a lo largo de 7 años en la intersección de ingeniería, logística y dirección ejecutiva.", col1_header:"Gestión y Estrategia", col2_header:"Software técnico — BIM · GIS · CAD", col3_header:"Idiomas",
+        tags: { program_mgmt:"Gestión de programas", agile:"Scrum / Agile", budgeting:"Presupuestación plurianual", cost_opt:"Optimización de costes", stakeholder:"Gestión de partes interesadas", risk:"Análisis de riesgos", leadership:"Liderazgo de equipos", negotiation:"Negociación con AAPP", reporting:"Reporting ejecutivo", ftth_lifecycle:"Gestión del ciclo de vida FTTH", contract:"Gestión contractual", kpi:"Cuadros de mando KPI" },
+        lang: { spanish_name:"Español", spanish_desc:"Lengua materna", catalan_name:"Catalán", catalan_desc:"Bilingüe", english_name:"Inglés", english_desc:"Certificado Cambridge ESOL", arabic_name:"Árabe", arabic_desc:"Competencia profesional operativa", french_name:"Francés", french_desc:"Nivel elemental", german_name:"Alemán", german_desc:"En proceso de aprendizaje" }
+      },
+      certifications: {
+        eyebrow:"Aprendizaje continuo", title:"Certificaciones y adaptabilidad", lead:"Las certificaciones de 2025 posicionan este perfil en la intersección de tres megatendencias que definirán el futuro de la infraestructura: transición energética, ciberseguridad de redes e inteligencia digital.",
+        cert1: { title:"Energía Solar (60h)", issuer:"SEAS / SEPE · 2025", desc:"Diseño e integración de sistemas solares térmicos y fotovoltaicos. Directamente aplicable a emplazamientos de infraestructura sostenible y despliegues de telecomunicaciones fuera de red — en línea con la agenda de transición energética de la UE." },
+        cert2: { title:"Ciberseguridad IFCT103 (49h)", issuer:"Universidad Nebrija + Mainjobs · 2025", desc:"Protocolos de red, prevención y respuesta a incidentes, biometría y seguridad inalámbrica. Fundamental para proteger la integridad de las redes FTTH desplegadas — un diferenciador clave para clientes en sectores regulados." },
+        cert3: { title:"Marketing Digital y Automatización (60h)", issuer:"Mainjobs + LinkedIn Learning · 2025", desc:"Planificación de marketing integrado y flujos de trabajo de automatización. Refuerza la capacidad de comunicar proyectos de infraestructura complejos y gestionar el posicionamiento de marca personal y corporativo en mercados internacionales." },
+        table: { col_cert:"Certificación", col_issuer:"Entidad emisora", col_year:"Año", col_hours:"Horas" }
+      },
+      education: {
+        eyebrow:"Formación académica", title:"Educación y cualificaciones técnicas", lead:"Una sólida base técnica en arquitectura, CAD, electrónica y dibujo técnico — el fundamento de una carrera en ejecución de infraestructuras.",
+        edu1: { title:"Estudios de Arquitectura (parciales)", meta:"Universidad Politécnica de Cataluña (UPC) · 2017–2019 · Nivel EQF 6", desc:"Dos años de estudios de arquitectura con diseño técnico CAD, cálculos estructurales, física de materiales y fundamentos de gestión de proyectos." },
+        edu2: { title:"CFGS — Proyectos y Obra Civil / Dibujo Arquitectónico y CAD", meta:"Institut Castellarnau, Sabadell · 2015–2017 · Nivel EQF 5", desc:"Ciclo formativo de grado superior especializado en dibujo arquitectónico técnico, software CAD y documentación de edificación. Base para flujos de trabajo de diseño BIM." },
+        edu3: { title:"CFGS — Técnico en Electrónica Industrial", meta:"IES Terrassa · 2010–2012 · Nivel EQF 5", desc:"Cualificación técnica en electrónica industrial, que aporta los conocimientos eléctricos y de sistemas necesarios para trabajar en infraestructuras de telecomunicaciones y equipos de red." }
+      },
+      downloads: { eyebrow:"Documentación", title:"Descargar documentos", cv:"CV completo (Inglés)", solar:"Certificado Energía Solar", cyber_nebrija:"Diploma Ciberseguridad (Nebrija)", digital_marketing:"Certificado Marketing Digital", big_data:"Big Data y Gobernanza de Datos", sustainability:"Certificado Desarrollo Sostenible", cost_analysis:"Análisis de costes para la decisión", sap:"SAP Conceptos e Iniciación", cambridge:"Certificado Cambridge ESOL", trinity:"Trinity College ESOL (Nivel 2)", telecom:"Operación de Telecomunicaciones", sketchup:"SketchUp Pro", pmi_pm:"Gestión de Proyectos (PMI®)", pmi_marketing:"Marketing Online (PMI®)", nocn:"Certificado NOCN (Nivel 3)", english_work:"Inglés para el trabajo", cybersecurity:"Ciberseguridad" },
+      contact: { eyebrow:"Contacto", title:"Ponte en contacto", label_name:"Nombre", label_email:"Correo electrónico", label_message:"Mensaje", btn_send:"Enviar mensaje", testimonial_eyebrow:"Prueba social", testimonial_title:"Testimonio profesional", testimonial_text:'"Abdelbarie es un profesional fiable y altamente adaptable. Entregó constantemente resultados de calidad bajo presión y demostró un excelente trabajo en equipo durante nuestros proyectos de despliegue de fibra en toda España."', testimonial_role:"Responsable de Proyecto · Modi SL" },
+      footer: { role:"Director de Programa · Despliegue de redes", btn_schedule:"Programar llamada", legal:"© 2026 Abdelbarie Taliouan. Todos los derechos reservados." }
+    },
+    CAT: {
+      nav: { home:"Inici", projects:"Projectes", skills:"Competències", certifications:"Certificacions", downloads:"Descàrregues", contact:"Contacte" },
+      hero: { badge:"Disponible per a noves oportunitats", role:"Director de Programa · Infraestructura FTTH i Telecomunicacions", description:"Líder de programa estratègic amb més de 7 anys dirigint el cicle de vida complet de desplegaments internacionals de telecomunicacions. Expert en la connexió entre l'execució tècnica BIM/GIS i la gestió de programes de diversos milions d'euros.", location:"Alemanya — Obert a la reubicació", nationality:"Ciutadà espanyol · Data de naixement 24/02/1989", btn_schedule:"Programar una reunió", btn_projects:"Veure projectes", btn_cv:"Descarregar CV" },
+      kpi: { years_label:"Anys en\ntelecomunicacions", budget_label:"Pressupost màxim\ngestionat", cost_label:"Reducció\nde costos", profit_label:"Benefici net\n(UNICO23)" },
+      projects: {
+        eyebrow:"Portafoli", title:"Projectes destacats", lead:"Programes d'infraestructura gestionats de principi a fi — des del disseny de xarxa i els permisos fins a la coordinació d'equips i la informació financera.", btn_download:"Descarregar", btn_request:"Sol·licitar accés",
+        project1: { tag:"FTTH + Ràdio", title:"Programa UNICO de Banda Ampla (NextGenerationEU)", li1:"Lideratge tècnic i gestió dels desplegaments de xarxes d'alta velocitat (≥300 Mbps) en zones rurals i geogràficament disperses, promoguts pel Ministeri de Transformació Digital i Funció Pública.", li2:"UNICO 2022/2023: Execució integral del pla de desplegament per reduir la bretxa digital, gestionant la planificació, la licitació i l'execució tècnica sobre el terreny sota els estàndards dels fons NextGenerationEU.", li3:"Gestió de subvencions: Coordinació tècnica per a la justificació correcta i el compliment de les fites davant l'administració pública per a la recepció dels fons.", metric_budget:"Pressupost", metric_cost:"Reducció de costos" },
+        project2: { tag:"Adamo", title:"Xarxa Adamo — Projecte Next Generation", li1:"Optimització i expansió de la infraestructura de xarxa pròpia d'Adamo, centrada en la maximització de la cobertura FTTH en desplegaments verticals i horitzontals.", li2:"Millora de l'eficiència en el desplegament de planta exterior i optimització dels recursos tècnics per accelerar el time-to-market per a nous clients.", metric_profit:"Benefici net generat" },
+        project3: { tag:"Infraestructura", title:"Xarxa Municipal — Ministeri de Transformació Digital i Servei Públic", li1:"Gestió d'actors clau a nivell governamental i de contractistes.", li2:"Gestió de riscos i resolució de bloquejos tècnics.", li3:"Compliment de terminis institucionals sota alta pressió.", li4:"Fidelització de clients a llarg termini gràcies al rendiment constant en les entregues.", metric_delivery:"Taxa d'entrega a temps" }
+      },
+      skills: {
+        eyebrow:"Capacitats", title:"Competències tècniques i transversals", lead:"Un perfil de competències multifuncional construït al llarg de 7 anys a la intersecció de l'enginyeria, la logística i la direcció executiva.", col1_header:"Gestió i Estratègia", col2_header:"Programari tècnic — BIM · GIS · CAD", col3_header:"Idiomes",
+        tags: { program_mgmt:"Gestió de programes", agile:"Scrum / Agile", budgeting:"Pressupostació plurianual", cost_opt:"Optimització de costos", stakeholder:"Gestió d'actors clau", risk:"Anàlisi de riscos", leadership:"Lideratge d'equips", negotiation:"Negociació amb AAPP", reporting:"Reporting executiu", ftth_lifecycle:"Gestió del cicle de vida FTTH", contract:"Gestió contractual", kpi:"Quadres de comandament KPI" },
+        lang: { spanish_name:"Espanyol", spanish_desc:"Llengua materna", catalan_name:"Català", catalan_desc:"Bilingüe", english_name:"Anglès", english_desc:"Certificat Cambridge ESOL", arabic_name:"Àrab", arabic_desc:"Competència professional operativa", french_name:"Francès", french_desc:"Nivell elemental", german_name:"Alemany", german_desc:"En curs d'aprenentatge" }
+      },
+      certifications: {
+        eyebrow:"Formació contínua", title:"Certificacions i adaptabilitat", lead:"Les certificacions de 2025 posicionen aquest perfil a la intersecció de tres megatendències que definiran el futur de la infraestructura: transició energètica, ciberseguretat de xarxes i intel·ligència digital.",
+        cert1: { title:"Energia Solar (60h)", issuer:"SEAS / SEPE · 2025", desc:"Disseny i integració de sistemes solars tèrmics i fotovoltaics. Directament aplicable a llocs d'infraestructura sostenible i desplegaments de telecomunicacions fora de la xarxa — en línia amb l'agenda de transició energètica de la UE." },
+        cert2: { title:"Ciberseguretat IFCT103 (49h)", issuer:"Universidad Nebrija + Mainjobs · 2025", desc:"Protocols de xarxa, prevenció i resposta a incidents, biometria i seguretat sense fil. Clau per protegir la integritat de les xarxes FTTH desplegades — un factor diferencial estratègic per a clients en sectors regulats." },
+        cert3: { title:"Màrqueting Digital i Automatització (60h)", issuer:"Mainjobs + LinkedIn Learning · 2025", desc:"Planificació de màrqueting integrat i fluxos de treball d'automatització. Enforteix la capacitat de comunicar projectes d'infraestructura complexos i gestionar el posicionament de marca personal i corporatiu en mercats internacionals." },
+        table: { col_cert:"Certificació", col_issuer:"Entitat emissora", col_year:"Any", col_hours:"Hores" }
+      },
+      education: {
+        eyebrow:"Formació acadèmica", title:"Educació i qualificacions tècniques", lead:"Una sòlida base tècnica en arquitectura, CAD, electrònica i dibuix tècnic — el fonament d'una carrera en execució d'infraestructures.",
+        edu1: { title:"Estudis d'Arquitectura (parcials)", meta:"Universitat Politècnica de Catalunya (UPC) · 2017–2019 · Nivell EQF 6", desc:"Dos anys d'estudis d'arquitectura que inclouen disseny tècnic CAD, càlculs estructurals, física de materials i fonaments de gestió de projectes." },
+        edu2: { title:"CFGS — Projectes i Obra Civil / Dibuix Arquitectònic i CAD", meta:"Institut Castellarnau, Sabadell · 2015–2017 · Nivell EQF 5", desc:"Cicle formatiu de grau superior especialitzat en dibuix arquitectònic tècnic, programari CAD i documentació d'edificació. Base per als fluxos de treball de disseny BIM." },
+        edu3: { title:"CFGS — Tècnic en Electrònica Industrial", meta:"IES Terrassa · 2010–2012 · Nivell EQF 5", desc:"Qualificació tècnica en electrònica industrial, que proporciona els coneixements elèctrics i de sistemes fonamentals per al treball en infraestructures de telecomunicacions i equips de xarxa." }
+      },
+      downloads: { eyebrow:"Documentació", title:"Descarregar documents", cv:"CV complet (Anglès)", solar:"Certificat d'Energia Solar", cyber_nebrija:"Diploma de Ciberseguretat (Nebrija)", digital_marketing:"Certificat de Màrqueting Digital", big_data:"Big Data i Governança de Dades", sustainability:"Certificat de Desenvolupament Sostenible", cost_analysis:"Anàlisi de costos per a la decisió", sap:"Conceptes i iniciació a SAP", cambridge:"Certificat Cambridge ESOL", trinity:"Trinity College ESOL (Nivell 2)", telecom:"Operació de Telecomunicacions", sketchup:"SketchUp Pro", pmi_pm:"Gestió de Projectes (PMI®)", pmi_marketing:"Màrqueting en línia (PMI®)", nocn:"Certificat NOCN (Nivell 3)", english_work:"Anglès per a la feina", cybersecurity:"Ciberseguretat" },
+      contact: { eyebrow:"Contacte", title:"Poseu-vos en contacte", label_name:"Nom", label_email:"Correu electrònic", label_message:"Missatge", btn_send:"Enviar missatge", testimonial_eyebrow:"Prova social", testimonial_title:"Testimoni professional", testimonial_text:'"Abdelbarie és un professional fiable i altament adaptable. Va lliurar constantment resultats de qualitat sota pressió i va demostrar un excel·lent treball en equip durant els nostres projectes de desplegament de fibra òptica a tot Espanya."', testimonial_role:"Cap de Projecte · Modi SL" },
+      footer: { role:"Director de Programa · Desplegament de xarxes", btn_schedule:"Programar una trucada", legal:"© 2026 Abdelbarie Taliouan. Tots els drets reservats." }
+    }
+  };
+
+  // ── i18n Engine ──
+  function getVal(obj, path) {
+    return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : null), obj);
+  }
+
+  function applyLang(langCode) {
+    const t = TRANSLATIONS[langCode];
+    if (!t) return;
+
+    // Update all data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const val = getVal(t, key);
+      if (val !== null) el.innerHTML = val.replace(/\n/g, '<br>');
+    });
+
+    // RTL for Arabic
+    document.body.classList.toggle('rtl', langCode === 'AR');
+    document.documentElement.setAttribute('lang', langCode === 'AR' ? 'ar' : langCode.toLowerCase());
+    document.documentElement.setAttribute('dir', langCode === 'AR' ? 'rtl' : 'ltr');
+
+    // Update active option
+    document.querySelectorAll('.lang-switcher__option').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === langCode);
+    });
+    document.getElementById('langCurrent').textContent = langCode;
+
+    // Persist
+    localStorage.setItem('lang', langCode);
+  }
+
+  // ── Switcher UI ──
+  const langBtn      = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+
+  langBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = langDropdown.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.addEventListener('click', () => {
+    langDropdown.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+
+  langDropdown.addEventListener('click', (e) => {
+    const opt = e.target.closest('.lang-switcher__option');
+    if (opt) {
+      applyLang(opt.dataset.lang);
+      langDropdown.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ── Init: load saved or default ──
+  const savedLang = localStorage.getItem('lang') || 'EN';
+  applyLang(savedLang);
+  </script>
 </body>
 </html>
